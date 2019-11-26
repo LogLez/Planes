@@ -21,7 +21,7 @@ typedef struct s_vol{
     passenger passengers[500], passengers_saved[500];
 } vol;
 
-
+//TODO  TEST
 
 void add_passenger(vol* vol1){
     passenger *passenger1 = malloc(sizeof(passenger));
