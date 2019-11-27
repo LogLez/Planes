@@ -6,23 +6,22 @@
 #include "../flight/flight.c"
 #include "../bag/bag.c"
 
-void add_passenger(int id);
-void save_passenger(int id);
+int save_passenger(int id);
+int add_passenger(int id);
 
 /*============================================================*/
 
-void add_passenger(int id){
+int add_passenger(int id){
+
+    flight* f = find(id) ;
+    if(! f) return -1 ;
+
+
     passenger *passenger1 = malloc(sizeof(passenger));
     passenger1->nb_bags = 0;
 
-    flight *vol1 = getFlight(id);
-    if(vol1==NULL){
-        printf("Il n'y a aucun vol correspondant a cet id ! \n");
-        return;
-    }
-
     printf("\n \n");
-    printf("Le vol choisi : depart-> %s  arrivee -> %s \n \n", vol1->departure, vol1->arrival);
+    printf("Le vol choisi : depart-> %s  arrivee -> %s \n \n", f->departure, f->arrival);
     printf("--------------------------------\n \n");
 
     printf("Est-ce un passager prioritaire ? \n");
@@ -60,52 +59,45 @@ void add_passenger(int id){
 
     add_bag(passenger1);
 
-    strcpy(passenger1->destination,vol1->arrival);
+    strcpy(passenger1->destination,f->arrival);
     passenger1->ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
-
-
-
 
     printf(" \n \n");
     printf("===============================================\n");
     printf("Nom: %s            -   Prenom: %s \n", passenger1->surname, passenger1->name);
     printf("Age: %d                -   Date de naissance : %d/%d/%d\n", passenger1->age, passenger1->birthday[0], passenger1->birthday[1],  passenger1->birthday[2]);
     printf("Passeport: %d        -   Billet: %d \n", passenger1->passport_number, passenger1->ticket);
-    printf("Depart: %s           -   Arrivee: %s \n", vol1->departure, vol1->arrival);
+    printf("Depart: %s           -   Arrivee: %s \n", f->departure, f->arrival);
     printf("Nombre de bagagges:  %d \n", passenger1->nb_bags);
 
     printf("===============================================\n");
 
-
-    vol1->passengers[vol1->nb] = *passenger1;
-    vol1->nb = vol1->nb + 1;
+    f->passengers[f->nb] = *passenger1;
+    f->nb = f->nb + 1;
 
     printf("\n \n");
 
+    return 0;
 
 }
 
 
-void save_passenger(int id){
+int save_passenger(int id){
+
+    flight* f = find(id) ;
+    if(! f) return -1 ;
 
     int ticket, i, choice;
     passenger passenger1;
 
-    flight *vol1 = getFlight(id);
-    if(vol1==NULL){
-        printf("Il n'y a aucun vol correspondant a cet id ! \n");
-        return;
-    }
-
-
     printf("Indiquez le numéro du billet !\n");
     scanf("%i", &ticket);
 
-    for(i = 0; i < vol1->nb; i++){
-        if(vol1->passengers[i].ticket != ticket) continue;
+    for(i = 0; i < f->nb; i++){
+        if(f->passengers[i].ticket != ticket) continue;
 
 
-        passenger1 = vol1->passengers[i];
+        passenger1 = f->passengers[i];
 
         printf("Le passager souhaite il avoir une place spécifique  ?");
         scanf("%d", &choice);
@@ -113,35 +105,35 @@ void save_passenger(int id){
         if(choice == 1){
             printf("Ecrire la place souhaitez  < 0 et > 501!");
             scanf("%d", &choice);
-            int response = give_Specific_Place(vol1, choice);
+            int response = give_Specific_Place(f, choice);
 
             while(response == 0){
                 printf("Cette place n'est pas disponible");
                 scanf("%d", &choice);
-                response = give_Specific_Place(vol1, choice);
+                response = give_Specific_Place(f, choice);
             }
 
             passenger1.place = response;
 
         }else{
-            passenger1.place = give_place(vol1);
+            passenger1.place = give_place(f);
 
         }
         printf(" \n \n");
         printf("==============Bording_Pass================\n");
         printf("Nom: %s   -   Prenom: %s \n", passenger1.surname, passenger1.name);
         printf("Place: %d  -   Billet: %i \n", passenger1.place, passenger1.ticket);
-        printf("Depart: %s   -   Arrivee: %s \n", vol1->departure, vol1->arrival);
+        printf("Depart: %s   -   Arrivee: %s \n", f->departure, f->arrival);
         printf("==========================================\n");
-
         printf("\n");
 
-        ticket_bag(vol1, passenger1);
-
-        return;
+        ticket_bag(f, passenger1);
+        return 0;
     }
+
     printf(" \n");
     printf("Aucun passager avec ce numero de billet est inscrit ! \n");
     printf("\n \n");
+    return -1;
 
 }

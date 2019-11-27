@@ -40,7 +40,7 @@ int give_place(flight* vol1){
     return random;
 }
 
-flight* getFlight(int id){
+flight* find(int id){
 
     for(int i = 0; i<nb_flights;i++){
         if(flights[i]->id != id) continue;

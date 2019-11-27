@@ -9,7 +9,7 @@
 int send_menu(){
     int choice;
     printf("\n");
-    printf("===============================Menu======================================");
+    printf("===============================Menu====================================== \n");
     printf("Veuillez choisir le fonction voulue en tapant le numero associe !\n");
     printf("\n");
     printf("1 - Ajouter un vol !\n");
@@ -19,12 +19,53 @@ int send_menu(){
     printf("5 - Embarquer un vol !\n");
     printf("\n");
     printf("0 - Quitter le logiciel !\n");
-    printf("========================================================================");
+    printf("========================================================================\n");
 
     scanf("%d", &choice);
     return choice;
 
 }
+
+void case1(){
+    printf("Tres bien, nous allons proceder a l'ajout d'un vol ! \n");
+    add_flight();
+}
+void case2(){
+    int id;
+    printf("Tres bien, nous allons proceder a l'ajout d'un passager sur un vol ! \n \n");
+    printf("Veuillez entrez l'id du vol ?");
+    scanf("%d", &id);
+
+    if(0 == add_passenger(id)){
+        printf("Passager ajoute avec succes ! \n");
+    }else{
+        printf("Une erreur est survenue avec le numero du vol ! \n");
+    }
+}
+
+void case3(){
+    int id;
+    printf("Tres bien, nous allons proceder a l'enregistrement d'un passager ! \n \n");
+    printf("Veuillez entrez l'id du vol ?");
+    scanf("%d", &id);
+
+    if(0 == save_passenger(id)){
+        printf("Passager enregistre avec succes ! \n");
+    }else{
+        printf("Une erreur est survenue avec le billet ou le numero du vol ! \n");
+    }
+}
+
+void case4(){
+    printf("Tres bien, nous allons appliquer la douane a un passager ! \n");
+    //TODO verifier la douane
+}
+
+void case5(){
+    printf("Tres bien, nous allons embarquer les passagers d'un vol ! \n");
+    //TODO tester la fonction load_passenger dans la classe flight.c
+}
+
 
 
 int main()
@@ -40,28 +81,19 @@ int main()
     while (choice != 0){
         switch (choice){
             case 1:
-                printf("Tres bien, nous allons proceder a l'ajout d'un vol ! \n");
-                add_flight();
+                case1();
                 break;
             case 2:
-                printf("Tres bien, nous allons proceder a l'ajout d'un passager sur un vol ! \n \n");
-                printf("Veuillez entrez l'id du vol ?");
-                scanf("%d", &id);
-                add_passenger(id);
+              case2();
                 break;
             case 3:
-                printf("Tres bien, nous allons proceder a l'enregistrement d'un passager ! \n \n");
-                printf("Veuillez entrez l'id du vol ?");
-                scanf("%d", &id);
-                save_passenger(id);
+               case3();
                 break;
             case 4:
-                printf("Tres bien, nous allons appliquer la douane a un passager ! \n");
-                //TODO verifier la douane
+                case4();
                 break;
             case 5:
-                printf("Tres bien, nous allons embarquer les passagers d'un vol ! \n");
-                //TODO tester la fonction load_passenger dans la classe flight.c
+                case5();
                 break;
             default:
                 printf("Cette fonctionnalite n'existe pas ! \n");
