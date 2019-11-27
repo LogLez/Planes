@@ -25,7 +25,7 @@ int main()
     vol1.nb = 0;
     strcpy(vol1.arrival,  "Antique");
     strcpy(vol1.departure,  "France");
-
+//
 
 
     switch (choice){
