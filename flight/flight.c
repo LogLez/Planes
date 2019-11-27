@@ -1,3 +1,16 @@
+#pragma once
+#include "flight.h"
+
+int give_Specific_Place(flight *vol1, int place);
+int give_place(flight* vol1);
+void add_flight();
+void load_passengers(flight* vol1);
+void load_bags(flight* vol1);
+
+flight *flights[500];
+int nb_flights = 0;
+
+/*============================================================*/
 
 int give_Specific_Place(flight *vol1, int place) {
 
@@ -25,6 +38,54 @@ int give_place(flight* vol1){
     }
 
     return random;
+}
+
+flight* getFlight(int id){
+
+    for(int i = 0; i<nb_flights;i++){
+        if(flights[i]->id != id) continue;
+        return flights[i];
+    }
+    return NULL;
+}
+
+void add_flight(){
+    int id, boolean = 1;
+    flight *flight1 = malloc(sizeof(flight));
+    printf("Indiquez l'ID du vol ? \n");
+    scanf("%d", &id);
+    while(boolean == 1){
+        boolean = 0;
+        if(nb_flights == 0) break;
+        for(int i = 0; i<nb_flights;i++){
+            if(flights[i]->id == id) { boolean = 1; break;}
+            boolean = 0;
+        }
+        printf("Cet id est deja utilise ! \n");
+        printf("Indiquez l'ID du vol ? \n");
+        scanf("%d", &id);
+    }
+
+    flight1->id = id;
+
+    printf("Indiquez le pays de depart du vol (sans-espace) ? \n");
+    scanf("%s", flight1->departure);
+    printf("Indiquez le pays d'arrivee du vol (sans-espace) ? \n");
+    scanf("%s", flight1->arrival);
+
+    flight1->nb = 0;
+    flight1->passengers_loaded = 0;
+
+    flights[nb_flights] = flight1;
+    nb_flights = nb_flights + 1;
+
+    printf("le vol %d a ete ajoute avec succes ! \n \n", flight1->id);
+
+    printf("==========================================\n");
+    printf("Id: %d  -   passagers: %i \n", flight1->id, flight1->nb);
+    printf("Depart: %s   -   Arrivee: %s \n", flight1->departure, flight1->arrival);
+    printf("==========================================\n");
+    printf("\n");
 }
 
 void load_passengers(flight* vol1){

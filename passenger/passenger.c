@@ -1,12 +1,29 @@
+#pragma once
+#include "passenger.h"
+
 #include "stdio.h"
 #include "../flight/flight.h"
 #include "../flight/flight.c"
 #include "../bag/bag.c"
 
+void add_passenger(int id);
+void save_passenger(int id);
 
-void add_passenger(flight* vol1){
+/*============================================================*/
+
+void add_passenger(int id){
     passenger *passenger1 = malloc(sizeof(passenger));
     passenger1->nb_bags = 0;
+
+    flight *vol1 = getFlight(id);
+    if(vol1==NULL){
+        printf("Il n'y a aucun vol correspondant a cet id ! \n");
+        return;
+    }
+
+    printf("\n \n");
+    printf("Le vol choisi : depart-> %s  arrivee -> %s \n \n", vol1->departure, vol1->arrival);
+    printf("--------------------------------\n \n");
 
     printf("Est-ce un passager prioritaire ? \n");
     scanf("%d", &passenger1->priority);
@@ -69,11 +86,18 @@ void add_passenger(flight* vol1){
 }
 
 
+void save_passenger(int id){
 
-void save_passenger(flight* vol1){
-
-    int ticket, i, j, k, choice;
+    int ticket, i, choice;
     passenger passenger1;
+
+    flight *vol1 = getFlight(id);
+    if(vol1==NULL){
+        printf("Il n'y a aucun vol correspondant a cet id ! \n");
+        return;
+    }
+
+
     printf("Indiquez le numéro du billet !\n");
     scanf("%i", &ticket);
 

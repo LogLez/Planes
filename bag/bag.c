@@ -1,4 +1,12 @@
 #pragma once
+#include "bag.h"
+
+void add_bag(passenger* passenger1);
+void ticket_bag(flight* vol1, passenger passenger1);
+
+
+/*============================================================*/
+
 
 void add_bag(passenger* passenger1){
     int choice;
