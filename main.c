@@ -3,6 +3,7 @@
 #include <time.h>
 #include "passenger/passenger.c"
 
+
 int main()
 {
     long int u, choice;
@@ -19,11 +20,21 @@ int main()
     printf("5 - Embarquer un vol !\n");
     scanf("%d", &choice);
 
+    flight vol1;
+    vol1.id = 1;
+    vol1.nb = 0;
+    strcpy(vol1.arrival,  "Antique");
+    strcpy(vol1.departure,  "France");
+
+
+
     switch (choice){
         case 1:
             printf("Vous avez chosi d'ajouter un vol !\n");
             break;
         case 2:
+            add_passenger(&vol1);
+            save_passenger(&vol1);
             printf("Vous avez chosi d'ajouter un passager sur un vol !\n");
             break;
         case 3:
