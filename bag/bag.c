@@ -35,7 +35,7 @@ void add_bag(passenger* passenger1){
         }
     }
 
-    printf("Souhaitez-vouis enregistrer un baggae non-prioritaire ? \n");
+    printf("Souhaitez-vouis enregistrer un bagage non-prioritaire ? \n");
     scanf("%i", &choice);
     if(choice == 1){
         bag bag1;
@@ -77,7 +77,7 @@ void ticket_bag(flight* vol1, passenger passenger1){
         printf("Poids: %dkg  \n", bag1.kg);
         printf("Depart: %s   -   Arrivee: %s \n", vol1->departure, vol1->arrival);
         if(bag1.priority == 1)  printf("Baggage prioritaire: 1  \n");
-        if(bag1.priority == 0) printf("Baggage non-prioritaire: 1  \n");
+        if(bag1.priority == 0) printf("Baggage non-prioritaire: %d \n", passenger1.nb_bags - bag1.priority );
         printf("----------------------------------------\n");
     }
 }

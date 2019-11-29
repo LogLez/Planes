@@ -27,13 +27,13 @@ int add_passenger(int id){
     printf("Est-ce un passager prioritaire ? \n");
     scanf("%d", &passenger1->priority);
 
-    printf("Veuillez entrez le nom de famille du passager ! \n");
+    printf("Veuillez entrer le nom de famille du passager ! \n");
     scanf("%s", passenger1->surname);
-    printf("Veuillez entrez le prenom du passager !\n");
+    printf("Veuillez entrer le prenom du passager !\n");
     scanf("%s", passenger1->name);
-    printf("Veuillez entrez l'age du passager !\n");
+    printf("Veuillez entrer l'age du passager !\n");
     scanf("%d", &passenger1->age);
-    printf("Veuillez entrez la date de naissance du passager du passager !\n");
+    printf("Veuillez entrer la date de naissance du passager !\n");
     printf("Veuillez indiquer le jour de naissance.\n");
     scanf("%d", &passenger1->birthday[0]);
     while (passenger1->birthday[0] < 0 || passenger1->birthday[0] > 31){
@@ -54,7 +54,7 @@ int add_passenger(int id){
         scanf("%d", &passenger1->birthday[2]);
     }
 
-    printf("Veuillez indiquer le numéro du passport du passager. \n");
+    printf("Veuillez indiquer le numéro du passeport du passager. \n");
     scanf("%d", &passenger1->passport_number);
 
     add_bag(passenger1);
@@ -68,7 +68,7 @@ int add_passenger(int id){
     printf("Age: %d                -   Date de naissance : %d/%d/%d\n", passenger1->age, passenger1->birthday[0], passenger1->birthday[1],  passenger1->birthday[2]);
     printf("Passeport: %d        -   Billet: %d \n", passenger1->passport_number, passenger1->ticket);
     printf("Depart: %s           -   Arrivee: %s \n", f->departure, f->arrival);
-    printf("Nombre de bagagges:  %d \n", passenger1->nb_bags);
+    printf("Nombre de bagages:  %d \n", passenger1->nb_bags);
 
     printf("===============================================\n");
 
@@ -103,7 +103,7 @@ int save_passenger(int id){
         scanf("%d", &choice);
 
         if(choice == 1){
-            printf("Ecrire la place souhaitez  < 0 et > 501!");
+            printf("Ecrire la place souhaitee  > 0 et < 501!");
             scanf("%d", &choice);
             int response = give_Specific_Place(f, choice);
 
@@ -124,6 +124,8 @@ int save_passenger(int id){
         printf("Nom: %s   -   Prenom: %s \n", passenger1.surname, passenger1.name);
         printf("Place: %d  -   Billet: %i \n", passenger1.place, passenger1.ticket);
         printf("Depart: %s   -   Arrivee: %s \n", f->departure, f->arrival);
+        if(passenger1.priority==1){printf("Passager prioritaire. \n");}
+        else{printf("Passager non prioritaire. \n");}
         printf("==========================================\n");
         printf("\n");
 
