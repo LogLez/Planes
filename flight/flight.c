@@ -3,9 +3,14 @@
 
 int give_Specific_Place(flight *vol1, int place);
 int give_place(flight* vol1);
+int searchID(int id);
+int saveFlights();
+int getFlights();
 void add_flight();
-void load_passengers(flight* vol1);
 void load_bags(flight* vol1);
+void showFlights();
+
+flight* find(int id);
 
 flight *flights[500];
 int nb_flights = 0;
@@ -14,10 +19,10 @@ int nb_flights = 0;
 
 int give_Specific_Place(flight *vol1, int place) {
 
-    if(vol1->nb == 1)
+    if(vol1->nb_passengers == 1)
         return place;
 
-    for(int i = 0 ; i<vol1->nb;i++){
+    for(int i = 0 ; i<vol1->nb_passengers;i++){
         if(vol1->passengers[i].place != place) continue;
         return 0;
     }
@@ -28,10 +33,10 @@ int give_Specific_Place(flight *vol1, int place) {
 int give_place(flight* vol1){
     int random = 1 + (500-1) * ( (float) rand()) / RAND_MAX;
 
-    if(vol1->nb == 1)
+    if(vol1->nb_passengers == 1)
         return random;
 
-    for(int i = 0 ; i<vol1->nb;i++){
+    for(int i = 0 ; i<vol1->nb_passengers;i++){
         if(vol1->passengers[i].place != random) continue;
         give_place(vol1);
         return 0;
@@ -48,22 +53,27 @@ flight* find(int id){
     }
     return NULL;
 }
+int searchID(int id){
+    for(int i =0 ; i<nb_flights;i++){
+        if(flights[i]->id == id){
+            return 1;
+        }
+    }
+    return 0;
+}
 
 void add_flight(){
-    int id, boolean = 1;
+    int id, boolean;
     flight *flight1 = malloc(sizeof(flight));
+
     printf("Indiquez l'ID du vol ? \n");
     scanf("%d", &id);
+    boolean = searchID(id);
+
     while(boolean == 1){
-        boolean = 0;
-        if(nb_flights == 0) break;
-        for(int i = 0; i<nb_flights;i++){
-            if(flights[i]->id == id) { boolean = 1; break;}
-            boolean = 0;
-        }
-        printf("Cet id est deja utilise ! \n");
-        printf("Indiquez l'ID du vol ? \n");
+        printf("Cet id est deja utilise ! \nIndiquez l'ID du vol ? \n");
         scanf("%d", &id);
+        boolean = searchID(id);
     }
 
     flight1->id = id;
@@ -73,7 +83,7 @@ void add_flight(){
     printf("Indiquez le pays d'arrivee du vol (sans-espace) ? \n");
     scanf("%s", flight1->arrival);
 
-    flight1->nb = 0;
+    flight1->nb_passengers = 0;
     flight1->passengers_loaded = 0;
 
     flights[nb_flights] = flight1;
@@ -82,15 +92,17 @@ void add_flight(){
     printf("le vol %d a ete ajoute avec succes ! \n \n", flight1->id);
 
     printf("==========================================\n");
-    printf("Id: %d  -   passagers: %i \n", flight1->id, flight1->nb);
+    printf("Id: %d  -   passagers: %i \n", flight1->id, flight1->nb_passengers);
     printf("Depart: %s   -   Arrivee: %s \n", flight1->departure, flight1->arrival);
     printf("==========================================\n");
     printf("\n");
 }
 
-void load_passengers(flight* vol1){
+
+
+void load_passenger(flight* vol1){
     int tab[500], k = 0;
-    for(int i =0; i<vol1->nb;i++){
+    for(int i =0; i<vol1->nb_passengers;i++){
         if(vol1->passengers[i].priority != 1) continue;
         printf("Embarcation de %s %s \n", vol1->passengers[i].surname, vol1->passengers[i].name );
         vol1->passengers_saved[k] = vol1->passengers[i];
@@ -99,7 +111,7 @@ void load_passengers(flight* vol1){
     }
 
     printf("Il y a au total %d  passagers prioritaire. Tous ont été embarqué !\n", k);
-    for(int i = 0; i<vol1->nb; i++){
+    for(int i = 0; i<vol1->nb_passengers; i++){
         for(int j = 0; j<k; j++)if(i==tab[j]) continue;
 
         printf("Embarcation de %s %s \n", vol1->passengers[i].surname, vol1->passengers[i].name);
@@ -110,35 +122,82 @@ void load_passengers(flight* vol1){
 
     vol1->passengers_loaded = k;
 
-    if(vol1->passengers_loaded != vol1->nb){ printf("Erreur, tous les passagers n'ont pas embarqué ! \n"); return; }
+    if(vol1->passengers_loaded != vol1->nb_passengers){ printf("Erreur, tous les passagers n'ont pas embarqué ! \n"); return; }
     printf("Tous les passagers ont  embarqué ! \n");
 }
 
 
-void load_bags(flight* vol1){
+int saveFlights(){
+    FILE *outfile;
 
-    int tab[500], k = 0;
+    // open file for writing
+    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat", "w");
 
-    for(int i = 0; i<500;i++){
 
-        if(vol1->passengers_saved[i].priority != 1) continue;
-        for(int j = 0; j <vol1->passengers_saved[i].nb_bags;j++){
-            printf("Bag prioritaire chargé et embarqué ! \n");
-            vol1->bags_loaded[k] = vol1->passengers_saved[i].bag[j];
-            tab[k] = i;
-            k++;
-        }
+    fwrite(&nb_flights, sizeof(int), 1, outfile);
+
+    // write struct to file
+    for(int i = 0; i <nb_flights;i++){
+        fwrite (flights[i], sizeof(struct s_flight), 1, outfile);
     }
 
-    for(int i = 0; i<500;i++){
-        for(int j = 0; j<k; j++) if(i == tab[j]) break;
+    if(fwrite != 0)
+        printf("%d vols ont ete sauvegarder dans le fichier\n", nb_flights);
+    else
+        printf("error writing file !\n");
 
-        for(int l = 0; l<vol1->passengers_saved[i].nb_bags; l++){
-            printf("Bag chargé et embarqué ! \n");
-            vol1->bags_loaded[k] = vol1->passengers_saved[i].bag[l];
-            tab[k] = i;
-            k++;
-        }
+    // close file
+    fclose (outfile);
+
+    return 0;
+}
+
+int getFlights(){
+
+    FILE *infile;
+
+    // Open person.dat for reading
+    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat" , "r");
+    if (infile == NULL){
+        fprintf(stderr, "\nLe fichie n'existe pas ! Il sera creer à la fin du programme.\n");
+        return 0;
     }
 
+    fread(&nb_flights, sizeof(int), 1, infile);
+
+    flight *tab = malloc(sizeof(struct s_flight) * nb_flights);
+    fread(tab, sizeof(struct s_flight), nb_flights, infile);
+
+
+    for(int i = 0; i<nb_flights;i++){
+        struct s_flight *input = malloc(sizeof(flight));
+        *input = tab[i];
+        flights[i] = input;
+    }
+
+    free(tab);
+    // close file
+
+    if(fread != 0)
+        printf("%d vols ont ete recupere depuis le fichier !\n", nb_flights);
+    else
+        printf("error reading file !\n");
+    fclose (infile);
+
+    return 0;
+}
+
+void showFlights(){
+    printf("Voici la liste de tous les vols disponible: \n\n");
+    for(int i = 0; i<nb_flights;i++){
+        printf("- id: %d --- depart: %s --- arrivee: %s ! \n Pssengers : ", flights[i]->id, flights[i]->departure, flights[i]->arrival);
+        if(flights[i]->nb_passengers > 0){
+            for (int j = 0; j < flights[i]->nb_passengers; ++j) {
+                printf("Pasager %d: %s , %s", j +1 , flights[i]->passengers[j].surname,flights[i]->passengers[j].name );
+            }
+        }
+        printf("\n");
+
+    }
+    printf("=========================================\n");
 }

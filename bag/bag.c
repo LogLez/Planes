@@ -3,8 +3,10 @@
 
 void add_bag(passenger* passenger1);
 void ticket_bag(flight* vol1, passenger passenger1);
+void load_bags(flight* vol1);
 
-
+int nbForbidden = 0;
+char forbidden[100][50];
 /*============================================================*/
 
 
@@ -80,4 +82,33 @@ void ticket_bag(flight* vol1, passenger passenger1){
         if(bag1.priority == 0 ) printf("Baggage non-prioritaire: 1 \n");
         printf("----------------------------------------\n");
     }
+}
+
+
+void load_bags(flight* vol1){
+
+    int tab[500], k = 0;
+
+    for(int i = 0; i<500;i++){
+
+        if(vol1->passengers_saved[i].priority != 1) continue;
+        for(int j = 0; j <vol1->passengers_saved[i].nb_bags;j++){
+            printf("Bag prioritaire chargé et embarqué ! \n");
+            vol1->bags_loaded[k] = vol1->passengers_saved[i].bag[j];
+            tab[k] = i;
+            k++;
+        }
+    }
+
+    for(int i = 0; i<500;i++){
+        for(int j = 0; j<k; j++) if(i == tab[j]) break;
+
+        for(int l = 0; l<vol1->passengers_saved[i].nb_bags; l++){
+            printf("Bag chargé et embarqué ! \n");
+            vol1->bags_loaded[k] = vol1->passengers_saved[i].bag[l];
+            tab[k] = i;
+            k++;
+        }
+    }
+
 }
