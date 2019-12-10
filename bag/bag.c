@@ -5,8 +5,8 @@ void add_bag(passenger* passenger1);
 void ticket_bag(flight* vol1, passenger passenger1);
 void load_bags(flight* vol1);
 
-int nbForbidden = 0;
-char forbidden[100][50];
+int nbItemsForbidden = 0;
+char itemsForbidden[100][50];
 /*============================================================*/
 
 
@@ -85,30 +85,72 @@ void ticket_bag(flight* vol1, passenger passenger1){
 }
 
 
-void load_bags(flight* vol1){
+//TODO A TESTER
+void loadBags(flight* f){
 
-    int tab[500], k = 0;
+    int tab[500];
+    int alreadyLoaded = 0;
 
-    for(int i = 0; i<500;i++){
+    for(int i = 0; i < f->nbPassengersLoaded; i++){
 
-        if(vol1->passengers_saved[i].priority != 1) continue;
-        for(int j = 0; j <vol1->passengers_saved[i].nb_bags;j++){
+        if(f->passengersLoaded[i].priority != 1) continue;
+        for(int j = 0; j <f->passengersLoaded[i].nb_bags;j++){
             printf("Bag prioritaire chargé et embarqué ! \n");
-            vol1->bags_loaded[k] = vol1->passengers_saved[i].bag[j];
-            tab[k] = i;
-            k++;
+            f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[j];
+            tab[f->nbBags] = i;
+            f->nbBags++;
         }
     }
 
-    for(int i = 0; i<500;i++){
-        for(int j = 0; j<k; j++) if(i == tab[j]) break;
+    for(int i = 0; i < f->nbPassengersLoaded;i++){
 
-        for(int l = 0; l<vol1->passengers_saved[i].nb_bags; l++){
-            printf("Bag chargé et embarqué ! \n");
-            vol1->bags_loaded[k] = vol1->passengers_saved[i].bag[l];
-            tab[k] = i;
-            k++;
+        for (int j = 0; j < f->nbBags; j++){
+            if(tab[j] != i)  continue;
+            alreadyLoaded = 1;
+        }
+
+        if(alreadyLoaded == 0){
+            for(int k = 0; k<f->passengersLoaded[i].nb_bags; k++){
+
+                printf("Bag chargé et embarqué ! \n");
+                f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[k];
+                tab[f->nbBags] = i;
+                f->nbBags++;
+            }
         }
     }
+
+}
+
+//BONUS
+int checkBag(passenger *p){
+
+    for (int i = 0; i < nbItemsForbidden; ++i) {
+
+        for (int j = 0; j < p->nb_bags; ++j) {
+
+            for (int k = 0; k < p->bag[j].nb_items; ++k) {
+
+                if(strcmp(itemsForbidden[i],  p->bag[j].items[k])){
+
+                    printf("L'element %s est interdit au sein des bagages ! \n", p->bag[j].items[k]);
+                    printf("L'element %s va être supprime de votre bag ! \n",  p->bag[j].items[k]);
+
+                    for (int l = k; l < p->bag[j].nb_items ; ++l) {
+
+                        //TODO p->bag[j].items[l] = p->bag[j].items[l + 1];
+
+                    }
+                    p->bag[j].nb_items--;
+
+                }
+
+            }
+
+        }
+
+
+    }
+    return 0;
 
 }

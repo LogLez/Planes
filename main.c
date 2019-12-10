@@ -33,7 +33,7 @@ int flightMenu(flight *f){
     printf("1 - Ajouter un passager sur ce vol (Achat du billet) !\n");
     printf("2 - Enregistrer un passager sur ce vol !\n");
     printf("3 - Embarquer un passager sur ce vol !\n");
-    printf("4 - Charger les bagages de tous les passagers ! \n");
+    printf("4 - Charger les bagages  ! \n");
     printf("5 - Faire décoller ce vol !\n");
     printf("\n");
     printf("Appuyez sur n'importe quelle autre numéro pour retourner au menu principal !\n");
@@ -44,16 +44,16 @@ int flightMenu(flight *f){
     switch(choice){
 
         case 1:
-            add_passenger(f);
+            addPassenger(f);
             break;
         case 2:
-            save_passenger(f);
+            savePassenger(f);
             break;
         case 3:
             loadPassenger(f);
             break;
         case 4:
-            //TODO
+            loadBags(f);
             break;
         case 5:
             //TODO
