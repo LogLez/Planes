@@ -1,15 +1,14 @@
 #pragma once
 #include "flight.h"
 
-int give_Specific_Place(flight *vol1, int place);
-int give_place(flight* vol1);
+int specificPlace(flight *vol1, int place);
+int randomPlace(flight* vol1);
 int searchID(int id);
 int saveFlights();
 int getFlights();
 void add_flight();
 void load_bags(flight* vol1);
 void showFlights();
-
 flight* find(int id);
 
 flight *flights[500];
@@ -17,7 +16,7 @@ int nb_flights = 0;
 
 /*============================================================*/
 
-int give_Specific_Place(flight *vol1, int place) {
+int specificPlace(flight *vol1, int place) {
 
     if(vol1->nb_passengers == 1)
         return place;
@@ -30,7 +29,7 @@ int give_Specific_Place(flight *vol1, int place) {
     return place;
 }
 
-int give_place(flight* vol1){
+int randomPlace(flight* vol1){
     int random = 1 + (500-1) * ( (float) rand()) / RAND_MAX;
 
     if(vol1->nb_passengers == 1)
@@ -38,7 +37,7 @@ int give_place(flight* vol1){
 
     for(int i = 0 ; i<vol1->nb_passengers;i++){
         if(vol1->passengers[i].place != random) continue;
-        give_place(vol1);
+        randomPlace(vol1);
         return 0;
     }
 

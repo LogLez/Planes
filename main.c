@@ -36,11 +36,10 @@ int flightMenu(flight *f){
     printf("4 - Charger les bagages de tous les passagers ! \n");
     printf("5 - Faire décoller ce vol !\n");
     printf("\n");
-    printf("Appuyez sur n'importe quelle touche pour retourner au menu principal !\n");
+    printf("Appuyez sur n'importe quelle autre numéro pour retourner au menu principal !\n");
     printf("==============================================================================\n");
 
     scanf("%d", &choice);
-
 
     switch(choice){
 
@@ -68,7 +67,6 @@ int flightMenu(flight *f){
 }
 
 
-
 int main()
 {
     long int u;
@@ -77,10 +75,7 @@ int main()
     srand(u);
 
     getFlights();
-
     showFlights();
-
-  // printf("Bienvenue dans le logiciel de gestion de l'aeroport %d !\n", flights[0]->passengers[0].ticket);
 
     choice = send_menu();
 
@@ -95,12 +90,12 @@ int main()
                 scanf("%d", &id);
 
                 flight *f = find(id);
+
                 if(f != NULL){
                     flightMenu(f);
                 }else{
                     printf("Ce vol est introuvable !");
                 }
-
                 break;
             default:
                 printf("Ce menu n'existe pas ! \n");

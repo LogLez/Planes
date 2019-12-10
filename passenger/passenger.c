@@ -68,6 +68,11 @@ int add_passenger(flight *f ){
     printf("Passeport: %d        -   Billet: %d \n", passenger1->passport_number, passenger1->ticket);
     printf("Depart: %s           -   Arrivee: %s \n", f->departure, f->arrival);
     printf("Nombre de bagages:  %d \n", passenger1->nb_bags);
+    if(passenger1->priority == 1){
+        printf("Passager prioritaire \n");
+    }else{
+        printf("Passager non prioritaire \n");
+    }
 
     printf("===============================================\n");
 
@@ -81,7 +86,6 @@ int add_passenger(flight *f ){
 
     }
     showFlights();
-
 
     return 0;
 
@@ -97,6 +101,7 @@ int save_passenger(flight *f){
 
     for(i = 0; i < f->nb_passengers; i++){
         if(f->passengers[i].ticket != ticket) continue;
+
         if(f->passengers[i].isRegistered == 1){
             printf("Ce passager a deja ete enregistrer, il faurait l'embarquer maintenant ! \n");
             return 0;
@@ -108,18 +113,18 @@ int save_passenger(flight *f){
         if(choice == 1){
             printf("Ecrire la place souhaitee  > 0 et < 501!");
             scanf("%d", &choice);
-            int response = give_Specific_Place(f, choice);
+            int response = specificPlace(f, choice);
 
             while(response == 0){
                 printf("Cette place n'est pas disponible");
                 scanf("%d", &choice);
-                response = give_Specific_Place(f, choice);
+                response = specificPlace(f, choice);
             }
 
-            f->passengers[i].place = response;
+            f->passengers[i].place= response;
 
         }else{
-            f->passengers[i].place = give_place(f);
+            f->passengers[i].place = randomPlace(f);
 
         }
         printf(" \n \n");
