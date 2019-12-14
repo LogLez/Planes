@@ -125,6 +125,8 @@ void loadBags(flight* f){
 //BONUS
 int checkBag(passenger *p){
 
+    int longueur = 0;
+
     for (int i = 0; i < nbItemsForbidden; ++i) {
 
         for (int j = 0; j < p->nb_bags; ++j) {
@@ -138,7 +140,7 @@ int checkBag(passenger *p){
 
                     for (int l = k; l < p->bag[j].nb_items ; ++l) {
 
-                        //TODO p->bag[j].items[l] = p->bag[j].items[l + 1];
+                        p->bag[j].items[l] = p->bag[j].items[l + 1];
 
                     }
                     p->bag[j].nb_items--;
