@@ -8,6 +8,7 @@
 
 int send_menu()
 {
+    getItemsForbidden();
     int choice;
     printf("\n");
     printf("===============================Menu====================================== \n");
@@ -104,7 +105,7 @@ int main()
 
             choice = send_menu();
         }
-
+    saveItemsForbidden();
     saveFlights();
     printf("Bonne continuation !");
 }

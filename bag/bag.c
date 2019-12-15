@@ -9,6 +9,42 @@ int nbItemsForbidden = 0;
 char itemsForbidden[100][50];
 /*============================================================*/
 
+int saveItemsForbidden(){
+    FILE *outfile;
+    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt" , "w");
+    if (outfile == NULL){
+        fprintf(stderr, "\nLe fichie n'existe pas ! Il sera creer a la fin du programme.\n");
+        return 0;
+    }
+
+    fprintf(outfile, "%d \n", nbItemsForbidden);
+
+    for (int i = 0; i < nbItemsForbidden; i++){
+           fprintf(outfile, "%s\n", itemsForbidden[i]);
+    }
+    fclose(outfile);
+    return 0;
+}
+
+int getItemsForbidden(){
+    FILE *infile;
+    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt" , "r");
+    if (infile == NULL) {
+        fprintf(stderr, "\nLe fichier n'existe pas ! Il sera creer a la fin du programme.\n");
+        return 0;
+    }
+
+    int i = 0;
+    fscanf(infile, "%d", &nbItemsForbidden);
+
+   while(i != nbItemsForbidden){
+       fscanf(infile, "%s", itemsForbidden[i]);
+       i++;
+   }
+    fclose(infile);
+    return 0;
+}
+
 
 void add_bag(passenger* passenger1){
     int choice;
@@ -125,15 +161,13 @@ void loadBags(flight* f){
 //BONUS
 int checkBag(passenger *p){
 
-    int longueur = 0;
-
     for (int i = 0; i < nbItemsForbidden; ++i) {
 
         for (int j = 0; j < p->nb_bags; ++j) {
 
             for (int k = 0; k < p->bag[j].nb_items; ++k) {
 
-                if(strcmp(itemsForbidden[i],  p->bag[j].items[k])){
+                if(strcmp(itemsForbidden[i],  &p->bag[j].items[k])){
 
                     printf("L'element %s est interdit au sein des bagages ! \n", p->bag[j].items[k]);
                     printf("L'element %s va être supprime de votre bag ! \n",  p->bag[j].items[k]);
