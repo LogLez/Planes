@@ -104,7 +104,7 @@ int saveFlights(){
     FILE *outfile;
 
     // open file for writing
-    outfile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\flights.dat", "w");
+    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat", "w");
 
 
     fwrite(&nb_flights, sizeof(int), 1, outfile);
@@ -130,7 +130,7 @@ int getFlights(){
     FILE *infile;
 
     // Open person.dat for reading
-    infile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\flights.dat" , "r");
+    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat" , "r");
     if (infile == NULL){
         fprintf(stderr, "\nLe fichie n'existe pas ! Il sera creer à la fin du programme.\n");
         return 0;
@@ -166,7 +166,7 @@ void showFlights(){
         printf("- id: %d --- depart: %s --- arrivee: %s ! \n Passengers : ", flights[i]->id, flights[i]->departure, flights[i]->arrival);
         if(flights[i]->nbPassengers > 0){
             for (int j = 0; j < flights[i]->nbPassengers; ++j) {
-                printf("     Pasager %d: %s , %s \n", j +1 , flights[i]->passengers[j].surname,flights[i]->passengers[j].name );
+                printf("     Pasager %d: %s , %s , %d\n", j +1 , flights[i]->passengers[j].surname,flights[i]->passengers[j].name, flights[i]->passengers[j].ticket );
             }
         }
         printf("\n");
