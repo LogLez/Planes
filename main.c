@@ -33,7 +33,7 @@ int flightMenu(flight *f){
     printf("\n");
     printf("1 - Ajouter un passager sur ce vol (Achat du billet) !\n");
     printf("2 - Enregistrer un passager sur ce vol !\n");
-    printf("3 - Embarquer un passager sur ce vol !\n");
+    printf("3 - Faire passer la sécurité et embarquer un passager sur ce vol !\n");
     printf("4 - Charger les bagages  ! \n");
     printf("5 - Faire décoller ce vol !\n");
     printf("\n");

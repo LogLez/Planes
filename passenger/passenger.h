@@ -7,5 +7,6 @@ typedef struct s_passenger{
     int passport_number, place, nb_bags, isRegistered;
     long int ticket;
     bag bag[2];
+    handbag handbag;
 }passenger;
 

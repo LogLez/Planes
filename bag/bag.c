@@ -162,34 +162,4 @@ void loadBags(flight* f){
 }
 
 //BONUS
-int checkBag(passenger *p){
 
-    for (int i = 0; i < nbItemsForbidden; ++i) {
-
-        for (int j = 0; j < p->nb_bags; ++j) {
-
-            for (int k = 0; k < p->bag[j].nbItems; ++k) {
-
-                if(strcmp(itemsForbidden[i],  p->bag[j].items[k])){
-
-                    printf("L'element %s est interdit au sein des bagages ! \n", p->bag[j].items[k]);
-                    printf("L'element %s va être supprime de votre bag ! \n",  p->bag[j].items[k]);
-
-                    for (int l = k; l < p->bag[j].nbItems ; ++l) {
-
-                        //p->bag[j].items[l] = p->bag[j].items[l + 1];
-
-                    }
-                    p->bag[j].nbItems--;
-
-                }
-
-            }
-
-        }
-
-
-    }
-    return 0;
-
-}
