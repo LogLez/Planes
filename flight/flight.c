@@ -85,7 +85,8 @@ void add_flight(){
     scanf("%s", flight1->departure);
     printf("Indiquez le pays d'arrivee du vol (sans-espace) ? \n");
     scanf("%s", flight1->arrival);
-
+    printf("Ce voyage necessite un visa ( 1 = OUI, 0 = NON) ? \n");
+    scanf("%d", &flight1->visa);
     flight1->nbPassengers = 0;
     flight1->nbPassengersLoaded = 0;
     flight1->nbBags = 0;
