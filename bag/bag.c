@@ -4,6 +4,8 @@
 void add_bag(passenger* passenger1);
 void ticket_bag(flight* vol1, passenger passenger1);
 void load_bags(flight* vol1);
+handbag addHandbag();
+void checkHandBag(passenger* p);
 
 int nbItemsForbidden = 0;
 char itemsForbidden[100][50];
@@ -136,8 +138,6 @@ void ticket_bag(flight* vol1, passenger passenger1){
     }
 }
 
-
-//TODO A TESTER
 void loadBags(flight* f){
 
     for(int i = 0; i < f->nbPassengersLoaded; i++){
@@ -162,7 +162,7 @@ void loadBags(flight* f){
 }
 
 //BONUS
-int addHandbag(passenger *p){
+handbag addHandbag(){
     handbag handbag1;
 
     printf("Combien d'items comportera votre baggage ? \n");
@@ -172,11 +172,10 @@ int addHandbag(passenger *p){
         printf("Indiquez votre %d item ? \n", i + 1);
         scanf("%s", handbag1.items[i]);
     }
+    return handbag1;
 }
 
-int checkBag(passenger *p){
-
-
+void checkHandBag(passenger *p){
 
     for (int i = 0; i < nbItemsForbidden; i++) {
 
@@ -198,9 +197,5 @@ int checkBag(passenger *p){
             }
 
         }
-
-
     }
-    return 0;
-
 }

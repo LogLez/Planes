@@ -179,6 +179,35 @@ void showFlights(){
     printf("=========================================\n");
 }
 
+int sendFlight(flight *f){
+    if(f->nbPassengers != f->nbPassengersLoaded){
+        printf("Tous les passagers enregistre n'ont pas embarque !");
+        return -1;
+    }
+    int bags = 0;
+    for (int i = 0; i < f->nbPassengersLoaded; i++) {
+        for(int j = 0; j < f->passengersLoaded[i].nb_bags; j++){
+            bags++;
+        }
+    }
+
+    if(bags != f->nbBags){
+        printf("Tous les bags n'ont pas ete enregistre ! L'avion ne peut donc pas decoller \n");
+        return-1;
+    }
+
+    if(f->visa == 1){
+        for (int i = 0; i < f->nbPassengersLoaded; i++) {
+            if(f->passengersLoaded[i].visa == 1) continue;
+
+            printf("Le pasager %s ne possede pas de visa, il ne peut donc pas prendre ce vol !\n", f->passengersLoaded[i].name);
+            return -1;
+        }
+    }
+    printf("Le vol %d a destintion de %s vient de partir de %s \n", f->id, f->arrival, f->departure);
+    return 0;
+
+}
 //BONUS
 
 int graphics(flight *f , int nbFlights){

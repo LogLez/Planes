@@ -57,6 +57,7 @@ int addPassenger(flight *f ){
     scanf("%d", &passenger1->passport_number);
 
     add_bag(passenger1);
+    passenger1->handbag = addHandbag();
 
     strcpy(passenger1->destination,f->arrival);
     passenger1->ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
@@ -89,6 +90,32 @@ int addPassenger(flight *f ){
 
     return 0;
 
+}
+int crossBorder(flight *f){
+    int ticket;
+
+    printf("Veuillez entrez le numero du billet du passager !");
+    scanf("%d", &ticket);
+    for (int i = 0; i < f->nbPassengers; i++) {
+
+        if (f->passengers[i].ticket != ticket) continue;
+
+        printf("Le passager %s %s veut se rendre en %s !\n", f->passengers[i].surname, f->passengers[i].name, f->arrival);
+        if(f->visa == 1){
+            printf("Ce vol demande un visa au passager !\n");
+            if(f->passengers[i].visa == 1){
+                printf("et %s %s possede bien un visa \n", f->passengers[i].surname
+                        , f->passengers[i].name);
+            }else{
+                printf("et %s %s ne possede pas de visa \n", f->passengers[i].surname
+                        , f->passengers[i].name);
+                return -1;
+            }
+        }else{
+            printf("Ce vol ne demande pas de visa \n");
+        }
+    }
+    return 0;
 }
 
 
@@ -127,8 +154,10 @@ int savePassenger(flight *f){
 
         }else{
             f->passengers[i].place = randomPlace(f);
-
         }
+
+        if(crossBorder(f) != 0) printf("Une erreur est survenue avec le visa du passager ! \n");
+
         printf(" \n \n");
         printf("==============Bording_Pass================\n");
         printf("Nom: %s   -   Prenom: %s \n", f->passengers[i].surname, f->passengers[i].name);
@@ -157,7 +186,6 @@ int loadPassenger(flight *f ){
     printf("Veuillez entrez le numero du billet du passager !");
     scanf("%d", &ticket);
 
-
     for (int j = 0; j < f->nbPassengers; j++) {
         if (f->passengers[j].ticket != ticket) continue;
 
@@ -165,6 +193,7 @@ int loadPassenger(flight *f ){
             printf("Ce passager n'a pas ete enregistrer, il faurait l'enregistrer avant de l'embarquer ! \n");
             return -1;
         }
+
 
         if(f->passengers[j].priority == 0){
 
@@ -186,11 +215,6 @@ int loadPassenger(flight *f ){
                 }
             }
 
-
-            printf("Prioritaire : %d \n", nbPriority);
-            printf("Loaded : %d \n", f->nbPassengersLoaded);
-
-
 //SI IL Y A MOINS DE PASSAGER RENREGISTRER QUE DE PRIORITAIRE
             if (f->nbPassengersLoaded < nbPriority) {
                 printf("Tous les prioritaires doivent embarquer avant !");
@@ -201,40 +225,14 @@ int loadPassenger(flight *f ){
                 f->bagsLoaded[f->nbBags] = p.bag[k];
                 f->nbBags++;
             }
+            checkHandBag(&f->passengers[j]);
 
-            printf("Le passager %s %s a embarque sur le vol %d", f->passengers[j].surname, f->passengers[j].name,
+                printf("Le passager %s %s a embarque sur le vol %d", f->passengers[j].surname, f->passengers[j].name,
                    f->id);
             f->passengersLoaded[f->nbPassengersLoaded] = f->passengers[j];
-            f->nbPassengers--;
             f->nbPassengersLoaded++;
 
             return 0;
-
-            //SINON
-
-            /*int verif = 0;
-            for (int i = 0; i < nbPriority; i++) {
-                for (int j = 0; j < f->nbPassengersLoaded; j++) {
-                    printf("tab : %s \n", tab[i].surname);
-                    printf("f  : %s \n", f->passengersLoaded[j].surname);
-                    if (tab[i].ticket != f->passengersLoaded[j].ticket) continue;
-                    verif++;
-                }
-            }
-
-            printf("verif ; %d \n");
-
-            free(tab);
-            if (verif != nbPriority) {
-                printf("Tous les prioritaires doivent embarquer avant !");
-                return -1;
-            } else {
-                printf("Le passager %s %s a embarque sur le vol %d", f->passengers[j].surname, f->passengers[j].name,
-                       f->id);
-                f->passengersLoaded[f->nbPassengersLoaded] = f->passengers[j];
-                f->nbPassengers--;
-                f->nbPassengersLoaded++;
-            }*/
 
         }
 
@@ -243,10 +241,10 @@ int loadPassenger(flight *f ){
             f->nbBags++;
         }
 
+        checkHandBag(&f->passengers[j]);
         printf("Le passager %s %s a embarque sur le vol %d", f->passengers[j].surname, f->passengers[j].name,
                f->id);
         f->passengersLoaded[f->nbPassengersLoaded] = f->passengers[j];
-        //f->nbPassengers--;
         f->nbPassengersLoaded++;
 
         return 0;

@@ -32,7 +32,7 @@ int flightMenu(flight *f){
     printf("Veuillez choisir une fonction !\n");
     printf("\n");
     printf("1 - Ajouter un passager sur ce vol (Achat du billet) !\n");
-    printf("2 - Enregistrer un passager sur ce vol !\n");
+    printf("2 - Enregistrer un passager sur ce vol et passer les frontiere (Visa) !\n");
     printf("3 - Faire passer la sécurité et embarquer un passager sur ce vol !\n");
     printf("4 - Charger les bagages  ! \n");
     printf("5 - Faire décoller ce vol !\n");
@@ -48,7 +48,6 @@ int flightMenu(flight *f){
             addPassenger(f);
             break;
         case 2:
-            //showBags(f);
             savePassenger(f);
             break;
         case 3:
@@ -58,7 +57,7 @@ int flightMenu(flight *f){
             loadBags(f);
             break;
         case 5:
-            //TODO
+            sendFlight(f);
             break;
         default:
             printf("Ce menu n'existe pas !\n");
@@ -102,10 +101,10 @@ int main()
             default:
                 printf("Ce menu n'existe pas ! \n");
                 break;
-            }
-
-            choice = send_menu();
         }
+        choice = send_menu();
+    }
+
     saveItemsForbidden();
     saveFlights();
     printf("Bonne continuation !");
