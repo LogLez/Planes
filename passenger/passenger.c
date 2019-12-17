@@ -94,7 +94,7 @@ int addPassenger(flight *f ){
 
 int savePassenger(flight *f){
 
-    int ticket, i, choice;
+    int ticket, i, choice, response;
 
     printf("Indiquez le numéro du billet du passager !\n");
     scanf("%i", &ticket);
@@ -108,16 +108,17 @@ int savePassenger(flight *f){
         }
 
 
-        printf("Le passager souhaite il avoir une place spécifique  ?");
+        printf("Le passager souhaite il avoir une place spécifique  ? \n");
         scanf("%d", &choice);
 
         if(choice == 1){
-            printf("Ecrire la place souhaitee  > 0 et < 501!");
-            scanf("%d", &choice);
-            int response = specificPlace(f, choice);
+
+                printf("Ecrire la place souhaitee  > 0 et < 501! \n");
+                scanf("%d", &choice);
+                response = specificPlace(f, choice);
 
             while(response == 0){
-                printf("Cette place n'est pas disponible");
+                printf("Cette place n'est pas disponible, saisir une nouvelle place. \n");
                 scanf("%d", &choice);
                 response = specificPlace(f, choice);
             }
@@ -196,7 +197,7 @@ int loadPassenger(flight *f ){
                 return -1;
             }
 
-            for (int k = 0; k < p.nb_bags; ++k) {
+            for (int k = 0; k < p.nb_bags; k++) {
                 f->bagsLoaded[f->nbBags] = p.bag[k];
                 f->nbBags++;
             }

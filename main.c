@@ -48,8 +48,8 @@ int flightMenu(flight *f){
             addPassenger(f);
             break;
         case 2:
-            showBags(f);
-            //savePassenger(f);
+            //showBags(f);
+            savePassenger(f);
             break;
         case 3:
             loadPassenger(f);

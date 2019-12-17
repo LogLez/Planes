@@ -17,7 +17,10 @@ int nb_flights = 0;
 /*============================================================*/
 
 int specificPlace(flight *vol1, int place) {
-
+    while(1>place || place>501) {
+        printf("Saisir une nouvelle place. \n");
+        scanf("%d", &place);
+    }
     if(vol1->nbPassengers == 1)
         return place;
 
@@ -104,7 +107,7 @@ int saveFlights(){
     FILE *outfile;
 
     // open file for writing
-    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat", "w");
+    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.dat", "w");
 
 
     fwrite(&nb_flights, sizeof(int), 1, outfile);
@@ -130,7 +133,7 @@ int getFlights(){
     FILE *infile;
 
     // Open person.dat for reading
-    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat" , "r");
+    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.dat" , "r");
     if (infile == NULL){
         fprintf(stderr, "\nLe fichie n'existe pas ! Il sera creer à la fin du programme.\n");
         return 0;

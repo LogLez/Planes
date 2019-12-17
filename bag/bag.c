@@ -11,9 +11,9 @@ char itemsForbidden[100][50];
 
 int saveItemsForbidden(){
     FILE *outfile;
-    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt" , "w");
+    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "w");
     if (outfile == NULL){
-        fprintf(stderr, "\nLe fichie n'existe pas ! Il sera creer a la fin du programme.\n");
+        fprintf(stderr, "\nLe fichier n'existe pas ! Il sera creer a la fin du programme.\n");
         return 0;
     }
 
@@ -28,7 +28,7 @@ int saveItemsForbidden(){
 
 int getItemsForbidden(){
     FILE *infile;
-    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt" , "r");
+    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "r");
     if (infile == NULL) {
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera creer a la fin du programme.\n");
         return 0;
@@ -118,9 +118,14 @@ void ticket_bag(flight* vol1, passenger passenger1){
         bag bag1 = passenger1.bag[j];
         printf("-------------Ticket_Baggage-------------\n");
         printf("Nom: %s   -   Prenom: %s \n", passenger1.surname, passenger1.name);
-        printf("Items: ");
-        for(int k = 0; k<bag1.nbItems;k++){
-            printf("%s ,", bag1.items[k]);
+        if(bag1.nbItems != 0) {
+            printf("Items: ");
+            for (int k = 0; k < bag1.nbItems; k++) {
+                printf("%s ,", bag1.items[k]);
+            }
+        }
+        else{
+            printf("Aucun item. \n");
         }
         printf("\n");
         printf("Poids: %dkg  \n", bag1.kg);
