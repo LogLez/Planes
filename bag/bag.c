@@ -162,4 +162,45 @@ void loadBags(flight* f){
 }
 
 //BONUS
+int addHandbag(passenger *p){
+    handbag handbag1;
 
+    printf("Combien d'items comportera votre baggage ? \n");
+    scanf("%d", &handbag1.nbItems);
+
+    for(int i = 0; i<handbag1.nbItems; i++){
+        printf("Indiquez votre %d item ? \n", i + 1);
+        scanf("%s", handbag1.items[i]);
+    }
+}
+
+int checkBag(passenger *p){
+
+
+
+    for (int i = 0; i < nbItemsForbidden; i++) {
+
+        for (int k = 0; k < p->handbag.nbItems; k++) {
+
+
+            if(strcmp(itemsForbidden[i],  p->handbag.items[k])){
+
+                printf("L'element %s est interdit au sein des bagages ! \n", p->handbag.items[k]);
+                printf("L'element %s va être supprime de votre bag ! \n",  p->handbag.items[k]);
+
+                for (int l = k; l < p->handbag.nbItems-1 ; l++) {
+
+                    strcpy(p->handbag.items[l], p->handbag.items[l + 1]);
+
+                }
+                p->handbag.nbItems--;
+
+            }
+
+        }
+
+
+    }
+    return 0;
+
+}
