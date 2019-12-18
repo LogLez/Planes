@@ -148,7 +148,7 @@ int saveFlights(){
     FILE *outfile;
 
     // open file for writing
-    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat", "w");
+    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.dat", "w");
 
 
     fwrite(&nb_flights, sizeof(int), 1, outfile);
@@ -174,7 +174,7 @@ int getFlights(){
     FILE *infile;
 
     // Open person.dat for reading
-    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\flights.dat" , "r");
+    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.dat" , "r");
     if (infile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree à la fin du programme.\n");
         return 0;
@@ -225,11 +225,8 @@ int sendFlight(flight *f){
         return -1;
     }
     int bags = 0;
-    for (int i = 0; i < f->nbPassengersLoaded; i++) {
-        for(int j = 0; j < f->passengersLoaded[i].nb_bags; j++){
-            bags++;
-        }
-    }
+    for (int i=0;i<f->passengersLoaded; i++)
+    {bags = bags + f->passengersLoaded[i].nb_bags;}
 
     if(bags != f->nbBags){
         printf("Tous les bagages n'ont pas ete enregistres ! L'avion ne peut donc pas decoller. \n");

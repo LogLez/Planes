@@ -13,7 +13,7 @@ char itemsForbidden[100][50];
 
 int saveItemsForbidden(){
     FILE *outfile;
-    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt" , "w");
+    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "w");
     if (outfile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
@@ -30,7 +30,7 @@ int saveItemsForbidden(){
 
 int getItemsForbidden(){
     FILE *infile;
-    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt", "r");
+    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt", "r");
     if (infile == NULL) {
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
@@ -180,7 +180,7 @@ void checkHandBag(passenger *p){
         for (int k = 0; k < p->handbag.nbItems; k++) {
 
 
-            if(strcmp(itemsForbidden[i],  p->handbag.items[k])){
+            if(strcmp(itemsForbidden[i],  p->handbag.items[k] == 1)){
 
                 printf("L'element %s est interdit au sein des bagages ! \n", p->handbag.items[k]);
                 printf("L'element %s va être supprime de votre bag ! \n",  p->handbag.items[k]);
@@ -192,6 +192,8 @@ void checkHandBag(passenger *p){
                 }
                 p->handbag.nbItems--;
 
+            }else{
+                printf("Item %s valide. \n", p->handbag.items[k]);
             }
 
         }

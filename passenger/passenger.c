@@ -89,7 +89,7 @@ int addPassenger(flight *f ){
     printf("===============================================\n");
     printf("Nom: %s            -   Prenom: %s \n", p->surname, p->name);
     printf("Age: %d                -   Date de naissance : %d/%d/%d\n", p->age, p->birthday[0], p->birthday[1],  p->birthday[2]);
-    printf("Passeport: %d        -   Billet: %lu \n", p->passport_number, p->ticket);
+    printf("Passeport: %d        -   Billet: %d \n", p->passport_number, p->ticket);
     printf("Depart: %s           -   Arrivee: %s \n", f->departure, f->arrival);
     printf("Nombre de bagages:  %d \n", p->nb_bags);
     if(p->priority == 1){
@@ -186,7 +186,7 @@ int savePassenger(flight *f){
         printf(" \n \n");
         printf("==============Boarding_Pass================\n");
         printf("Nom: %s   -   Prenom: %s \n", f->passengers[i].surname, f->passengers[i].name);
-        printf("Place: %d  -   Billet: %lu \n", f->passengers[i].place, f->passengers[i].ticket);
+        printf("Place: %d  -   Billet: %d \n", f->passengers[i].place, f->passengers[i].ticket);
         printf("Depart: %s   -   Arrivee: %s \n", f->departure, f->arrival);
         if(f->passengers[i].priority==1){printf("Passager prioritaire. \n");}
         else{printf("Passager non prioritaire. \n");}
