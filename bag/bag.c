@@ -168,7 +168,7 @@ void addHandBag(passenger* p) {
 
     for (int i = 0; i < p->handbag.nbItems; i++) {
         printf("Indiquez votre %d item ? \n", i + 1);
-        scanf("%s", &p->handbag.items[i]);
+        scanf("%s", p->handbag.items[i]);
     }
 }
 
