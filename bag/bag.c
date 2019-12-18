@@ -4,7 +4,7 @@
 void add_bag(passenger* passenger1);
 void ticket_bag(flight* vol1, passenger passenger1);
 void load_bags(flight* vol1);
-handbag addHandbag();
+void add_handbag(passenger* p);
 void checkHandBag(passenger* p);
 
 int nbItemsForbidden = 0;
@@ -15,7 +15,7 @@ int saveItemsForbidden(){
     FILE *outfile;
     outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "w");
     if (outfile == NULL){
-        fprintf(stderr, "\nLe fichier n'existe pas ! Il sera creer a la fin du programme.\n");
+        fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
     }
 
@@ -32,7 +32,7 @@ int getItemsForbidden(){
     FILE *infile;
     infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "r");
     if (infile == NULL) {
-        fprintf(stderr, "\nLe fichier n'existe pas ! Il sera creer a la fin du programme.\n");
+        fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
     }
 
@@ -69,7 +69,7 @@ void add_bag(passenger* passenger1){
             bag b;
             b.priority = 1;
 
-            printf("Veuillez indiquez le poids du baggage ? \n");
+            printf("Veuillez indiquez le poids du baggage ? (en kg) \n");
             scanf("%d", &b.kg);
             printf("Combien d'items comportera votre baggage ? \n");
             scanf("%d", &b.nbItems);
@@ -79,7 +79,7 @@ void add_bag(passenger* passenger1){
                 scanf("%s", b.items[i]);
             }
 
-            printf("Vous avez enregistrer un bagage prioritaire ! \n");
+            printf("Vous avez enregistre un bagage prioritaire ! \n");
 
             passenger1->bag[0] = b;
             passenger1->nb_bags = passenger1->nb_bags + 1;
@@ -91,9 +91,9 @@ void add_bag(passenger* passenger1){
     if(choice == 1){
         bag bag1;
 
-        printf("Veuillez indiquez le poids du baggage ? \n");
+        printf("Veuillez indiquer le poids du bagage ? (en kg)\n");
         scanf("%d", &bag1.kg);
-        printf("Combien d'items comportera votre baggage ? \n");
+        printf("Combien d'items comportera votre bagage ? \n");
         scanf("%d", &bag1.nbItems);
 
         for(int i = 0; i<bag1.nbItems; i++){
@@ -109,7 +109,7 @@ void add_bag(passenger* passenger1){
             passenger1->bag[0] = bag1;
         }
 
-        printf("Vous avez enregistrer un baggage  ! \n");
+        printf("Vous avez enregistre un baggage  ! \n");
         passenger1->nb_bags = passenger1->nb_bags + 1;
     }
 }
@@ -123,11 +123,11 @@ void ticket_bag(flight* vol1, passenger passenger1){
         if(bag1.nbItems != 0) {
             printf("Items: ");
             for (int k = 0; k < bag1.nbItems; k++) {
-                printf("%s ,", bag1.items[k]);
+                printf("%s, ", bag1.items[k]);
             }
         }
         else{
-            printf("Aucun item. \n");
+            printf("Aucun item.");
         }
         printf("\n");
         printf("Poids: %dkg  \n", bag1.kg);
@@ -144,7 +144,7 @@ void loadBags(flight* f){
 
         if(f->passengersLoaded[i].priority != 1) continue;
         for(int j = 0; j <f->passengersLoaded[i].nb_bags;j++){
-            printf("Bag prioritaire chargé et embarqué ! \n");
+            printf("Bagage prioritaire chargé et embarqué ! \n");
             f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[j];
             f->nbBags++;
         }
@@ -154,7 +154,7 @@ void loadBags(flight* f){
 
         if(f->passengersLoaded[i].priority == 1) continue;
         for(int j = 0; j <f->passengersLoaded[i].nb_bags;j++){
-            printf("Bag chargé et embarqué ! \n");
+            printf("Bagage chargé et embarqué ! \n");
             f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[j];
             f->nbBags++;
         }
@@ -162,18 +162,17 @@ void loadBags(flight* f){
 }
 
 //BONUS
-handbag addHandbag(){
-    handbag handbag1;
+void add_handbag(passenger* p) {
 
-    printf("Combien d'items comportera votre baggage ? \n");
-    scanf("%d", &handbag1.nbItems);
+    printf("Combien d'items comportera votre bagage cabine ? \n");
+    scanf("%d", &p->handbag.nbItems);
 
-    for(int i = 0; i<handbag1.nbItems; i++){
+    for (int i = 0; i < p->handbag.nbItems; i++) {
         printf("Indiquez votre %d item ? \n", i + 1);
-        scanf("%s", handbag1.items[i]);
+        scanf("%s", &p->handbag.items[i]);
     }
-    return handbag1;
 }
+
 
 void checkHandBag(passenger *p){
 

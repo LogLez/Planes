@@ -11,7 +11,7 @@ int send_menu()
     getItemsForbidden();
     int choice;
     printf("\n");
-    printf("===============================Menu====================================== \n");
+    printf("===============================Menu======================================\n");
     printf("Veuillez choisir une fonction !\n");
     printf("\n");
     printf("1 - Ajouter un vol !\n");
@@ -32,12 +32,12 @@ int flightMenu(flight *f){
     printf("Veuillez choisir une fonction !\n");
     printf("\n");
     printf("1 - Ajouter un passager sur ce vol (Achat du billet) !\n");
-    printf("2 - Enregistrer un passager sur ce vol et passer les frontiere (Visa) !\n");
+    printf("2 - Enregistrer un passager sur ce vol et passer les frontieres (Visa) !\n");
     printf("3 - Faire passer la sécurité et embarquer un passager sur ce vol !\n");
     printf("4 - Charger les bagages  ! \n");
     printf("5 - Faire décoller ce vol !\n");
     printf("\n");
-    printf("Appuyez sur n'importe quelle autre numéro pour retourner au menu principal !\n");
+    printf("Appuyez sur n'importe quel autre numéro pour retourner au menu principal !\n");
     printf("==============================================================================\n");
 
     scanf("%d", &choice);
@@ -87,7 +87,7 @@ int main()
                 add_flight();
                 break;
             case 2:
-                printf("Veuillez entrez l'id du vol ?");
+                printf("Veuillez entrez l'id du vol ?\n");
                 scanf("%d", &id);
 
                 flight *f = find(id);
@@ -95,7 +95,7 @@ int main()
                 if(f != NULL){
                     flightMenu(f);
                 }else{
-                    printf("Ce vol est introuvable !");
+                    printf("Ce vol est introuvable !\n");
                 }
                 break;
             default:
@@ -107,5 +107,5 @@ int main()
 
     saveItemsForbidden();
     saveFlights();
-    printf("Bonne continuation !");
+    printf("Bonne continuation !\n");
 }

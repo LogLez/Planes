@@ -74,7 +74,7 @@ void add_flight(){
     boolean = searchID(id);
 
     while(boolean == 1){
-        printf("Cet id est deja utilise ! \nIndiquez l'ID du vol ? \n");
+        printf("Cet id est deja utilise ! \nIndiquez l'ID du vol. \n");
         scanf("%d", &id);
         boolean = searchID(id);
     }
@@ -85,7 +85,7 @@ void add_flight(){
     scanf("%s", flight1->departure);
     printf("Indiquez le pays d'arrivee du vol (sans-espace) ? \n");
     scanf("%s", flight1->arrival);
-    printf("Ce voyage necessite un visa ( 1 = OUI, 0 = NON) ? \n");
+    printf("Ce voyage necessite un visa (1 = OUI, 0 = NON) ? \n");
     scanf("%d", &flight1->visa);
     flight1->nbPassengers = 0;
     flight1->nbPassengersLoaded = 0;
@@ -119,7 +119,7 @@ int saveFlights(){
     }
 
     if(fwrite != 0)
-        printf("%d vols ont ete sauvegarder dans le fichier\n", nb_flights);
+        printf("%d vols ont ete sauvegardes dans le fichier\n", nb_flights);
     else
         printf("error writing file !\n");
 
@@ -136,7 +136,7 @@ int getFlights(){
     // Open person.dat for reading
     infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.dat" , "r");
     if (infile == NULL){
-        fprintf(stderr, "\nLe fichie n'existe pas ! Il sera creer à la fin du programme.\n");
+        fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree à la fin du programme.\n");
         return 0;
     }
 
@@ -156,7 +156,7 @@ int getFlights(){
     // close file
 
     if(fread != 0)
-        printf("%d vols ont ete recupere depuis le fichier !\n", nb_flights);
+        printf("%d vols ont ete recuperes depuis le fichier !\n", nb_flights);
     else
         printf("error reading file !\n");
     fclose (infile);
@@ -165,12 +165,12 @@ int getFlights(){
 }
 
 void showFlights(){
-    printf("Voici la liste de tous les vols disponible: \n\n");
+    printf("Voici la liste de tous les vols disponibles : \n\n");
     for(int i = 0; i<nb_flights;i++){
         printf("- id: %d --- depart: %s --- arrivee: %s ! \n Passengers : ", flights[i]->id, flights[i]->departure, flights[i]->arrival);
         if(flights[i]->nbPassengers > 0){
             for (int j = 0; j < flights[i]->nbPassengers; ++j) {
-                printf("     Pasager %d: %s , %s , %d\n", j +1 , flights[i]->passengers[j].surname,flights[i]->passengers[j].name, flights[i]->passengers[j].ticket );
+                printf("     Passager %d: %s , %s , %d\n", j +1 , flights[i]->passengers[j].surname,flights[i]->passengers[j].name, flights[i]->passengers[j].ticket );
             }
         }
         printf("\n");
@@ -181,7 +181,7 @@ void showFlights(){
 
 int sendFlight(flight *f){
     if(f->nbPassengers != f->nbPassengersLoaded){
-        printf("Tous les passagers enregistre n'ont pas embarque !");
+        printf("Tous les passagers enregistres n'ont pas embarque !\n");
         return -1;
     }
     int bags = 0;
@@ -192,7 +192,7 @@ int sendFlight(flight *f){
     }
 
     if(bags != f->nbBags){
-        printf("Tous les bags n'ont pas ete enregistre ! L'avion ne peut donc pas decoller \n");
+        printf("Tous les bagages n'ont pas ete enregistres ! L'avion ne peut donc pas decoller. \n");
         return-1;
     }
 
@@ -200,11 +200,11 @@ int sendFlight(flight *f){
         for (int i = 0; i < f->nbPassengersLoaded; i++) {
             if(f->passengersLoaded[i].visa == 1) continue;
 
-            printf("Le pasager %s ne possede pas de visa, il ne peut donc pas prendre ce vol !\n", f->passengersLoaded[i].name);
+            printf("Le passager %s ne possede pas de visa, il ne peut donc pas prendre ce vol !\n", f->passengersLoaded[i].name);
             return -1;
         }
     }
-    printf("Le vol %d a destintion de %s vient de partir de %s \n", f->id, f->arrival, f->departure);
+    printf("Le vol %d a destination de %s vient de partir de %s \n", f->id, f->arrival, f->departure);
     return 0;
 
 }
