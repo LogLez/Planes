@@ -16,6 +16,7 @@ int send_menu()
     printf("\n");
     printf("1 - Ajouter un vol !\n");
     printf("2 - Mettre a jour un vol existant !\n");
+    printf("3 - Bonus, informations sur une periode de vols ! \n");
     printf("\n");
     printf("0 - Quitter le logiciel !\n");
     printf("========================================================================\n");
@@ -71,7 +72,7 @@ int flightMenu(flight *f){
 int main()
 {
     long int u;
-    int choice, id;
+    int choice, id, day, month, finalDay, finalMonth;
     time(&u);
     srand(u);
 
@@ -84,7 +85,7 @@ int main()
         switch (choice){
             case 1:
                 printf("Tres bien, nous allons proceder a l'ajout d'un vol ! \n");
-                add_flight();
+                addFlight();
                 break;
             case 2:
                 printf("Veuillez entrez l'id du vol ?\n");
@@ -98,6 +99,33 @@ int main()
                     printf("Ce vol est introuvable !\n");
                 }
                 break;
+
+            case 3:
+                printf("Tres bien, nous allons proceder a la recuperation de la periode de vol !");
+                printf("Attention, cette fonctionnalite ne prends pas en compte le changement d'annee (2018/2019) mais seulement sur une annee ! \n\n");
+                printf("Veuillez entrez  Le jour et mois de depart de d'arrivee ! \n");
+                do{
+                    printf("depart: jour < 32 et > 0 \n");
+                    scanf("%d", &day);
+                }while(1 > day || day > 31);
+                do{
+                    printf("depart: mois  < 13 et > 0 \n");
+                    scanf("%d", &month);
+                }while(1 > month || month > 12);
+                do{
+                    printf("arrivee: jour  < 32 et > 0\n");
+                    scanf("%d", &finalDay);
+                }while(1 > day || day > 31);
+                do{
+                    printf("arrivee: mois  < 13 et > 0\n");
+                    scanf("%d", &finalMonth);
+                }while(1 > month || month > 12);
+
+                printf("Vous avez choisi la periode %d/%d à %d/%d\n", day, month, finalDay, finalMonth);
+
+                getPeriod(day, month, finalDay, finalMonth);
+                break;
+
             default:
                 printf("Ce menu n'existe pas ! \n");
                 break;

@@ -1,10 +1,10 @@
 #pragma once
 #include "bag.h"
 
-void add_bag(passenger* passenger1);
-void ticket_bag(flight* vol1, passenger passenger1);
-void load_bags(flight* vol1);
-void add_handbag(passenger* p);
+void addBag(passenger* passenger1);
+void ticketBag(flight* vol1, passenger passenger1);
+void loadBags(flight* vol1);
+void addHandBag(passenger* p);
 void checkHandBag(passenger* p);
 
 int nbItemsForbidden = 0;
@@ -13,7 +13,7 @@ char itemsForbidden[100][50];
 
 int saveItemsForbidden(){
     FILE *outfile;
-    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "w");
+    outfile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt" , "w");
     if (outfile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
@@ -30,7 +30,7 @@ int saveItemsForbidden(){
 
 int getItemsForbidden(){
     FILE *infile;
-    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "r");
+    infile = fopen ("C:\\Users\\Rayane\\CLionProjects\\NF05\\Planes\\items.txt", "r");
     if (infile == NULL) {
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
@@ -59,7 +59,7 @@ void showBags(flight* f){
     }
     free(p);
 }
-void add_bag(passenger* passenger1){
+void addBag(passenger* passenger1){
     int choice;
 
     if(passenger1->priority == 1){
@@ -114,7 +114,7 @@ void add_bag(passenger* passenger1){
     }
 }
 
-void ticket_bag(flight* vol1, passenger passenger1){
+void ticketBag(flight* vol1, passenger passenger1){
 
     for(int j=0; j<passenger1.nb_bags;j++){
         bag bag1 = passenger1.bag[j];
@@ -161,8 +161,7 @@ void loadBags(flight* f){
     }
 }
 
-//BONUS
-void add_handbag(passenger* p) {
+void addHandBag(passenger* p) {
 
     printf("Combien d'items comportera votre bagage cabine ? \n");
     scanf("%d", &p->handbag.nbItems);

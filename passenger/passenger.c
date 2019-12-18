@@ -13,68 +13,86 @@ int loadPassenger(flight *f );
 /*============================================================*/
 
 int addPassenger(flight *f ){
+    int visa = 0, passport = 0, ticket = 0;
     printf("Bienvenue dans la categorie : Ajouter un passager !\n");
 
-    passenger *passenger1 = malloc(sizeof(passenger));
-    passenger1->nb_bags = 0;
-    passenger1->isRegistered = 0;
+    passenger *p = malloc(sizeof(passenger));
+    p->nb_bags = 0;
+    p->isRegistered = 0;
+    p->visa = 0;
 
     printf("\n \n");
     printf("Rappel: Vol  : depart-> %s  arrivee -> %s \n \n", f->departure, f->arrival);
     printf("-------------------------------- \n");
 
+    if(f->visa == 1){
+        printf("Atention, ce vol demande un visa ! \n");
+        printf("Le passager a t-il un visa ?\n");
+        scanf("%d", &visa);
+        if(visa != 1){
+            printf("Le passager ne peut donc pas prendre ce vol. \n");
+            free(p);
+            return -1;
+        }
+        p->visa = 1;
+        printf("Le passager  peut donc prendre ce vol. \n");
+
+    }
+    strcpy(p->destination,f->arrival);
+
     printf("Est-ce un passager prioritaire ? (1 = OUI, 0 = NON)\n");
-    scanf("%d", &passenger1->priority);
+    scanf("%d", &p->priority);
 
     printf("Veuillez entrer le nom de famille du passager ! \n");
-    scanf("%s", passenger1->surname);
+    scanf("%s", p->surname);
     printf("Veuillez entrer le prenom du passager !\n");
-    scanf("%s", passenger1->name);
+    scanf("%s", p->name);
     printf("Veuillez entrer l'age du passager !\n");
-    scanf("%d", &passenger1->age);
+    scanf("%d", &p->age);
     printf("Veuillez entrer la date de naissance du passager !\n");
     printf("Veuillez indiquer le jour de naissance.\n");
-    scanf("%d", &passenger1->birthday[0]);
-    while (passenger1->birthday[0] <= 0 || passenger1->birthday[0] > 31){
+    scanf("%d", &p->birthday[0]);
+    while (p->birthday[0] <= 0 || p->birthday[0] > 31){
         printf("Jour incorrect ! Veuillez indiquer le jour de naissance.\n");
-        scanf("%d", &passenger1->birthday[0]);
+        scanf("%d", &p->birthday[0]);
     }
     printf("Veuillez indiquer le mois de naissance !\n");
-    scanf("%d", &passenger1->birthday[1]);
-    while (passenger1->birthday[1] <=  0 || passenger1->birthday[1] > 12){
+    scanf("%d", &p->birthday[1]);
+    while (p->birthday[1] <=  0 || p->birthday[1] > 12){
         printf("Mois incorrect ! Veuillez indiquer le mois de naissance.\n");
-        scanf("%d", &passenger1->birthday[1]);
+        scanf("%d", &p->birthday[1]);
     }
 
     printf("Veuillez indiquer l'année de naissance !\n");
-    scanf("%d", &passenger1->birthday[2]);
-    while  (passenger1->birthday[2] < 1900 || passenger1->birthday[2] >= 2019){
+    scanf("%d", &p->birthday[2]);
+    while  (p->birthday[2] < 1900 || p->birthday[2] >= 2019){
         printf("Année incorrect ! Veuillez indiquer  l'annee de naissance.\n");
-        scanf("%d", &passenger1->birthday[2]);
+        scanf("%d", &p->birthday[2]);
     }
+    do{
+        printf("Veuillez indiquer le numéro du passeport du passager. \n");
+        scanf("%d", &p->passport_number);
+    }while(getPassport(passport) == 0);
 
-    printf("Veuillez indiquer le numéro du passeport du passager. \n");
-    scanf("%d", &passenger1->passport_number);
+    p->passport_number = passport;
 
-    add_bag(passenger1);
-    //add_handbag(passenger1);
+    do{
+        ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
+    }while(getTicket(ticket) == 0);
 
-    if(f->visa == 1) {
-        printf("Le passager possede-t-il son visa (1=OUI, 0=NON)? \n");
-        scanf("%d", &passenger1->visa);
-    }
+    p->ticket = ticket;
 
-    strcpy(passenger1->destination,f->arrival);
-    passenger1->ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
+    addBag(p);
+    addHandBag(p);
 
     printf(" \n \n");
     printf("===============================================\n");
-    printf("Nom: %s            -   Prenom: %s \n", passenger1->surname, passenger1->name);
-    printf("Age: %d                -   Date de naissance : %d/%d/%d\n", passenger1->age, passenger1->birthday[0], passenger1->birthday[1],  passenger1->birthday[2]);
-    printf("Passeport: %d        -   Billet: %d \n", passenger1->passport_number, passenger1->ticket);
+    printf("Nom: %s            -   Prenom: %s \n", p->surname, p->name);
+    printf("Age: %d                -   Date de naissance : %d/%d/%d\n", p->age, p->birthday[0], p->birthday[1],  p->birthday[2]);
+    printf("Passeport: %d        -   Billet: %d \n", p->passport_number, p->ticket);
     printf("Depart: %s           -   Arrivee: %s \n", f->departure, f->arrival);
-    printf("Nombre de bagages:  %d \n", passenger1->nb_bags);
-    if(passenger1->priority == 1){
+    printf("Nombre de bagages:  %d \n", p->nb_bags);
+    if(p->priority == 1){
         printf("Passager prioritaire \n");
     }else{
         printf("Passager non prioritaire \n");
@@ -82,8 +100,10 @@ int addPassenger(flight *f ){
 
     printf("===============================================\n");
 
-    f->passengers[f->nbPassengers] = *passenger1;
+    f->passengers[f->nbPassengers] = *p;
     f->nbPassengers = f->nbPassengers + 1;
+
+    free(p);
 
     printf("\n \n");
 
@@ -175,7 +195,7 @@ int savePassenger(flight *f){
 
         f->passengers[i].isRegistered = 1;
 
-        ticket_bag(f, f->passengers[i]);
+        ticketBag(f, f->passengers[i]);
 
         return 0;
     }
@@ -211,11 +231,9 @@ int loadPassenger(flight *f ){
             }
 
 //VERIFICATION PASSAGER PRIORITAIRE
-            passenger *tab = malloc(sizeof(struct s_passenger) * nbPriority);
             nbPriority = 0;
             for (int i = 0; i < f->nbPassengers; ++i) {
                 if (f->passengers[i].priority == 1) {
-                    tab[nbPriority] = f->passengers[i];
                     nbPriority++;
                 }
             }
