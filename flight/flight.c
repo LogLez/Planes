@@ -2,7 +2,7 @@
 #include "flight.h"
 
 int getPassport(int passport);
-int getTicket(int ticket);
+int getTicket();
 int specificPlace(flight *vol1, int place);
 int randomPlace(flight* vol1);
 int searchID(int id);
@@ -36,15 +36,20 @@ int getPassport(int passport){
     return passport;
 }
 
-int getTicket(int ticket){
-    for(int i = 0; i < nb_flights; i++){
+int getTicket(){
+    int result = 0;
+    int ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
+    while (result == 0){
+        result = 1;
+        for(int i = 0; i < nb_flights; i++){
 
-        for(int j = 0; j < flights[i]->nbPassengers; j++){
+            for(int j = 0; j < flights[i]->nbPassengers; j++){
 
-            if(flights[i]->passengers[j].ticket == 0) continue;
-            if(flights[i]->passengers[j].ticket != ticket) continue;
+                if(flights[i]->passengers[j].ticket == 0) continue;
+                if(flights[i]->passengers[j].ticket != ticket) continue;
 
-            return 0;
+                result = 0;
+            }
         }
     }
     return ticket;

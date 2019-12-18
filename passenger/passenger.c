@@ -13,7 +13,7 @@ int loadPassenger(flight *f );
 /*============================================================*/
 
 int addPassenger(flight *f ){
-    int visa = 0, passport = 0, ticket = 0;
+    int visa = 0, passport = 0;
     printf("Bienvenue dans la categorie : Ajouter un passager !\n");
 
     passenger *p = malloc(sizeof(passenger));
@@ -75,12 +75,7 @@ int addPassenger(flight *f ){
     }while(getPassport(passport) == 0);
 
     p->passport_number = passport;
-
-    do{
-        ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
-    }while(getTicket(ticket) == 0);
-
-    p->ticket = ticket;
+    p->ticket = getTicket();
 
     addBag(p);
     addHandBag(p);
