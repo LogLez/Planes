@@ -78,7 +78,7 @@ int addPassenger(flight *f ){
     }
 
     p->passport_number = addPassport();
-    p->ticket = getTicket();
+    p->ticket = addTicket();
 
     addBag(p);
     addHandBag(p);
