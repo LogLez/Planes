@@ -1,6 +1,9 @@
 #pragma once
 #include "bag.h"
+int saveItemsForbidden();
+int getItemsForbidden();
 
+void showBags(flight *f);
 void addBag(passenger* passenger1);
 void ticketBag(flight* vol1, passenger passenger1);
 void loadBags(flight* vol1);
@@ -180,7 +183,7 @@ void checkHandBag(passenger *p){
         for (int k = 0; k < p->handbag.nbItems; k++) {
 
 
-            if(strcmp(itemsForbidden[i],  p->handbag.items[k] == 1)){
+            if(strcmp(itemsForbidden[i],  p->handbag.items[k])){
 
                 printf("L'element %s est interdit au sein des bagages ! \n", p->handbag.items[k]);
                 printf("L'element %s va être supprime de votre bag ! \n",  p->handbag.items[k]);

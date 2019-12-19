@@ -1,18 +1,20 @@
 #pragma once
 #include "flight.h"
 
-int getPassport(int passport);
-int getTicket();
+int addPassport();
+int addTicket();
 int specificPlace(flight *vol1, int place);
 int randomPlace(flight* vol1);
+int hasVisa(flight *f, passenger *p);
+flight* find(int id);
 int searchID(int id);
+
+void addFlight();
 int saveFlights();
 int getFlights();
-void addFlight();
-void loadBags(flight* vol1);
+
 void showFlights();
 int sendFlight(flight *f);
-flight* find(int id);
 void getPeriod(int ay, int month, int finalDay, int finalMonth);
 int graphics(flight *f , int nbFlights);
 
@@ -22,21 +24,31 @@ int nb_flights = 0;
 
 /*============================================================*/
 
-int getPassport(int passport){
-    for(int i = 0; i < nb_flights; i++){
+int addPassport(){
+    int passport;
 
+    printf("Veuillez indiquer le numéro du passeport du passager. \n");
+    scanf("%d", &passport);
+    while (passport < 1000){
+        printf("Un passport doit être superieur a 1000 ! \n");
+        printf("Veuillez indiquer le numéro du passeport du passager. \n");
+        scanf("%d", &passport);
+    }
+
+    for(int i = 0; i < nb_flights; i++){
         for(int j = 0; j < flights[i]->nbPassengers; j++){
 
             if(flights[i]->passengers[j].passport_number == 0) continue;
             if(flights[i]->passengers[j].passport_number != passport) continue;
 
-            return 0;
+            return addPassport();
         }
     }
+
     return passport;
 }
 
-int getTicket(){
+int addTicket(){
     int result = 0;
     int ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
     while (result == 0){
@@ -86,6 +98,23 @@ int randomPlace(flight* vol1){
     return random;
 }
 
+int hasVisa(flight *f, passenger *p){
+    int visa = 0;
+    if(f->visa == 1){
+        printf("Atention, ce vol demande un visa ! \n");
+        printf("Le passager a t-il un visa ?\n");
+        scanf("%d", &visa);
+        if(visa != 1){
+            printf("Le passager ne peut donc pas prendre ce vol. \n");
+            free(p);
+            return -1;
+        }
+        p->visa = 1;
+        printf("Le passager  peut donc prendre ce vol. \n");
+
+    }
+    return 0;
+}
 flight* find(int id){
 
     for(int i = 0; i<nb_flights;i++){
@@ -104,7 +133,7 @@ int searchID(int id){
 }
 
 void addFlight(){
-    int id, boolean;
+    int id;
     flight *flight1 = malloc(sizeof(flight));
 
     printf("Indiquez l'ID du vol ? \n");
@@ -205,7 +234,7 @@ int getFlights(){
 }
 
 void showFlights(){
-    printf("Voici la liste de tous les vols disponibles : \n\n");
+    printf("\n\nVoici la liste de tous les vols disponibles : \n\n");
     for(int i = 0; i<nb_flights;i++){
         printf("- id: %d --- depart: %s --- arrivee: %s ! \n Passengers : ", flights[i]->id, flights[i]->departure, flights[i]->arrival);
         if(flights[i]->nbPassengers > 0){
@@ -233,7 +262,7 @@ int sendFlight(flight *f){
         return-1;
     }
 
-    if(f->visa == 1){
+    if(f->visa){
         for (int i = 0; i < f->nbPassengersLoaded; i++) {
             if(f->passengersLoaded[i].visa == 1) continue;
 
