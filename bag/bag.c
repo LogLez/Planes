@@ -147,7 +147,7 @@ void loadBags(flight* f){
 
         if(f->passengersLoaded[i].priority != 1) continue;
         for(int j = 0; j <f->passengersLoaded[i].nb_bags;j++){
-            printf("Bagage prioritaire chargé et embarqué ! \n");
+            printf("Bagage prioritaire de %s %s chargé et embarqué ! \n", f->passengersLoaded[i].name,f->passengersLoaded[i].surname);
             f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[j];
             f->nbBags++;
         }
@@ -157,7 +157,7 @@ void loadBags(flight* f){
 
         if(f->passengersLoaded[i].priority == 1) continue;
         for(int j = 0; j <f->passengersLoaded[i].nb_bags;j++){
-            printf("Bagage chargé et embarqué ! \n");
+            printf("Bagage de %s %s chargé et embarqué ! \n", f->passengersLoaded[i].name,f->passengersLoaded[i].surname);
             f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[j];
             f->nbBags++;
         }
@@ -182,8 +182,8 @@ void checkHandBag(passenger *p){
 
         for (int k = 0; k < p->handbag.nbItems; k++) {
 
-
-            if(strcmp(itemsForbidden[i],  p->handbag.items[k])){
+        int compare = strcmp(itemsForbidden[i],  p->handbag.items[k]);
+            if(compare == 0){
 
                 printf("L'element %s est interdit au sein des bagages ! \n", p->handbag.items[k]);
                 printf("L'element %s va être supprime de votre bag ! \n",  p->handbag.items[k]);
@@ -195,9 +195,10 @@ void checkHandBag(passenger *p){
                 }
                 p->handbag.nbItems--;
 
-            }else{
-                printf("Item %s valide. \n", p->handbag.items[k]);
             }
+            /*else{
+                printf("Item %s valide. \n", p->handbag.items[k]);
+            }*/
 
         }
     }

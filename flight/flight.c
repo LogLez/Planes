@@ -177,7 +177,7 @@ int saveFlights(){
     FILE *outfile;
 
     // open file for writing
-    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.dat", "w");
+    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.txt", "w");
 
 
     fwrite(&nb_flights, sizeof(int), 1, outfile);
@@ -203,7 +203,7 @@ int getFlights(){
     FILE *infile;
 
     // Open person.dat for reading
-    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.dat" , "r");
+    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.txt" , "r");
     if (infile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree à la fin du programme.\n");
         return 0;
@@ -236,10 +236,10 @@ int getFlights(){
 void showFlights(){
     printf("\n\nVoici la liste de tous les vols disponibles : \n\n");
     for(int i = 0; i<nb_flights;i++){
-        printf("- id: %d --- depart: %s --- arrivee: %s ! \n Passengers : ", flights[i]->id, flights[i]->departure, flights[i]->arrival);
+        printf("- id: %d --- depart: %s --- arrivee: %s ! \n Passengers : \n", flights[i]->id, flights[i]->departure, flights[i]->arrival);
         if(flights[i]->nbPassengers > 0){
             for (int j = 0; j < flights[i]->nbPassengers; ++j) {
-                printf("     Passager %d: %s , %s , %d\n", j +1 , flights[i]->passengers[j].surname,flights[i]->passengers[j].name, flights[i]->passengers[j].ticket );
+                printf("Passager %d : %s , %s , %d\n", j +1 , flights[i]->passengers[j].surname,flights[i]->passengers[j].name, flights[i]->passengers[j].ticket );
             }
         }
         printf("\n");
@@ -252,16 +252,18 @@ int sendFlight(flight *f){
     if(f->nbPassengers != f->nbPassengersLoaded){
         printf("Tous les passagers enregistres n'ont pas embarque !\n");
         return -1;
+        //OK
     }
     int bags = 0;
-    for (int i=0;i<f->passengersLoaded; i++)
+    for (int i=0; i < f->nbPassengersLoaded; i++)
     {bags = bags + f->passengersLoaded[i].nb_bags;}
-
-    if(bags != f->nbBags){
+    if(bags == f->nbBags){
         printf("Tous les bagages n'ont pas ete enregistres ! L'avion ne peut donc pas decoller. \n");
+
         return-1;
     }
-
+    else{printf("Tous les bagages ont été portés dans l'avion. \n");}
+    /*
     if(f->visa){
         for (int i = 0; i < f->nbPassengersLoaded; i++) {
             if(f->passengersLoaded[i].visa == 1) continue;
@@ -270,6 +272,7 @@ int sendFlight(flight *f){
             return -1;
         }
     }
+     */
     printf("Le vol %d a destination de %s vient de partir de %s \n", f->id, f->arrival, f->departure);
     return 0;
 
