@@ -101,7 +101,7 @@ int main()
                 break;
 
             case 3:
-                printf("Tres bien, nous allons proceder a la recuperation de la periode de vol !");
+                printf("Tres bien, nous allons proceder a la recuperation de la periode de vol ! \n");
                 printf("Attention, cette fonctionnalite ne prends pas en compte le changement d'annee (2018/2019) mais seulement sur une annee ! \n\n");
                 printf("Veuillez entrez  Le jour et mois de depart de d'arrivee ! \n");
                 do{

@@ -102,7 +102,7 @@ int hasVisa(flight *f, passenger *p){
     int visa = 0;
     if(f->visa == 1){
         printf("Atention, ce vol demande un visa ! \n");
-        printf("Le passager a t-il un visa ?\n");
+        printf("Le passager a t-il un visa ? (1 = OUI, 0 = NON)\n");
         scanf("%d", &visa);
         if(visa != 1){
             printf("Le passager ne peut donc pas prendre ce vol. \n");
