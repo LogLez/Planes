@@ -255,9 +255,13 @@ int sendFlight(flight *f){
         //OK
     }
     int bags = 0;
-    for (int i=0; i < f->nbPassengersLoaded; i++)
-    {bags = bags + f->passengersLoaded[i].nb_bags;}
-    if(bags == f->nbBags){
+    printf("bags = %d \n", bags);
+    printf("f->nbBgas = %d  \n", f->nbBags);
+    for (int i=0; i < f->nbPassengersLoaded; i++) {
+        bags = bags + f->passengersLoaded[i].nb_bags;
+    }
+    printf("bags = %d \n", bags);
+    if(bags != f->nbBags){
         printf("Tous les bagages n'ont pas ete enregistres ! L'avion ne peut donc pas decoller. \n");
 
         return-1;
