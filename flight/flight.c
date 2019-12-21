@@ -347,8 +347,9 @@ int graphics(flight *f , int nbFlights){
         printf("---->  Il y a %d passagers prioritaire sur %d passagers au total! \n\n", priority , totalPassenger );
 
 
-        /*dayPriority = (int) dayPriority / totalPassenger;
-        for (int l = 0; l < 500; l++) {
+        /* Code ancien quand on s'est trompé de sujet
+         dayPriority = (int) dayPriority / totalPassenger;
+         for (int l = 0; l < 500; l++) {
             if (l == 499) {
                 printf("|");
                 break;
