@@ -177,7 +177,7 @@ int saveFlights(){
     FILE *outfile;
 
     // open file for writing
-    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.txt", "w");
+    outfile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\flights.dat", "w");
 
 
     fwrite(&nb_flights, sizeof(int), 1, outfile);
@@ -203,7 +203,7 @@ int getFlights(){
     FILE *infile;
 
     // Open person.dat for reading
-    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/flights.txt" , "r");
+    infile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\flights.dat" , "r");
     if (infile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree à la fin du programme.\n");
         return 0;
@@ -255,19 +255,14 @@ int sendFlight(flight *f){
         //OK
     }
     int bags = 0;
-    printf("bags = %d \n", bags);
-    printf("f->nbBgas = %d  \n", f->nbBags);
-    for (int i=0; i < f->nbPassengersLoaded; i++) {
-        bags = bags + f->passengersLoaded[i].nb_bags;
-    }
-    printf("bags = %d \n", bags);
+    for (int i=0; i < f->nbPassengersLoaded; i++) { bags = bags + f->passengersLoaded[i].nb_bags; }
+
     if(bags != f->nbBags){
         printf("Tous les bagages n'ont pas ete enregistres ! L'avion ne peut donc pas decoller. \n");
-
         return-1;
     }
-    else{printf("Tous les bagages ont été portés dans l'avion. \n");}
-    /*
+    else{printf("Tous les bagages ont ete charges dans l'avion. \n");}
+
     if(f->visa){
         for (int i = 0; i < f->nbPassengersLoaded; i++) {
             if(f->passengersLoaded[i].visa == 1) continue;
@@ -276,7 +271,6 @@ int sendFlight(flight *f){
             return -1;
         }
     }
-     */
     printf("Le vol %d a destination de %s vient de partir de %s \n", f->id, f->arrival, f->departure);
     return 0;
 
@@ -288,55 +282,84 @@ int graphics(flight *f , int nbFlights){
 
     //TODO FINIR
 
-    int **tab = (int**) malloc(sizeof(int*) * nbFlights);
+    int **tab = NULL;
+
+    tab = malloc(nbFlights * sizeof(int*));
+    for(int i = 0; i < nbFlights; i++)
+        tab[i] = malloc(2 * sizeof(int));
+
     int days = 0;
 
-    for(int i = 0; i < nbFlights; i++) {
-        for (int j = 0; j < days; j++) {
-            for (int k = 0; k < days; k++) {
-                if (f[i].date[0] != *tab[j] && f[i].date[i] != tab[j][k]) {
-                    *tab[days] = f[i].date[0];
-                    tab[days][days] = f[i].date[1];
-                    days++;
-                }
-            }
+    for(int amount = 0; amount < nbFlights; amount++) {
+        if(days == 0){
+            tab[0][0] = f[0].date[0];
+            tab[0][1] = f[0].date[1];
+            days++;
+
+            continue;
+        }
+
+        for (int k = 0; k < days; k++) {
+
+            if(f[amount].date[0] == tab[k][0] && f[amount].date[1] == tab[k][1]) continue;
+            tab[days][0] = f[amount].date[0];
+            tab[days][1] = f[amount].date[1];
+            days++;
+            break;
         }
 
     }
-    for(int i = 0; i < days; i++) {
-        int flight = 0, dayKgBags = 0, dayPriority = 0, totalBags =0, totalPassenger = 0;
-        for (int j = 0; j < nbFlights; j++) {
-            if(f[j].date[0] == *tab[i] && f[j].date[1] == tab[i][i]){
-                flight += 1;
+
+
+    for(int t = 0; t < days; t++) {
+        int nbVols = 0, kgBags = 0, priority = 0, totalBags = 0, totalPassenger = 0;
+        for(int j = 0; j < nbFlights; j++) {
+
+            if (f[j].date[0] == tab[t][0] && f[j].date[1] == tab[t][1]) {
+                nbVols += 1;
 
                 totalPassenger += f[j].nbPassengersLoaded;
                 totalBags += f[j].nbBags;
-                for (int k = 0; k < f[j].nbBags; ++k) {
-                    dayKgBags += f[j].bagsLoaded[k].kg;
-                }
+                for (int k = 0; k < f[j].nbBags; k++) { kgBags += f[j].bagsLoaded[k].kg; }
 
                 for (int k = 0; k < f[j].nbPassengersLoaded; ++k) {
-                    if(f[j].passengersLoaded[k].priority == 1){
-                        dayPriority += 1;
+                    if (f[j].passengersLoaded[k].priority == 1) {
+                        priority += 1;
                     }
                 }
 
             }
         }
 
-        printf("Jour %d/%d", *tab[i], tab[i][i]);
-        printf("Il y a un poids moyen de %d sur %d bags sur un ensemble de %d vols ! \n", dayKgBags, totalBags, flight);
-        dayPriority = (int) dayPriority / totalPassenger;
+        printf("Pour le Jour %d/%d, il y a  %d vols \n\n", tab[t][0], tab[t][1], nbVols);
+        printf("---->  Il y a %d/%d passagers dans ce ou ces avion(s)  \n", totalPassenger, 500 * nbVols);
 
+        float moyenne = 0;
+        if(totalBags != 0){
+            moyenne = (float) kgBags / totalBags;
+            printf("---->  Il y a un poids moyen de %.2f kg sur un ensemble de %d bags parmis %d vols ! \n", moyenne, totalBags, nbVols);
+
+        }else{
+            printf("---->  Il n'y a aucun bags dnas ce ou ces avion(s)! \n");
+        }
+
+        if( totalPassenger == 0) continue;
+        printf("---->  Il y a %d passagers prioritaire sur %d passagers au total! \n\n", priority , totalPassenger );
+
+
+        /*dayPriority = (int) dayPriority / totalPassenger;
         for (int l = 0; l < 500; l++) {
-            if(l == 499) { printf("|"); break; }
-            if(l >= dayPriority){
+            if (l == 499) {
+                printf("|");
+                break;
+            }
+            if (l >= dayPriority) {
                 printf("_");
                 continue;
             }
             printf(".");
         }
-
+*/
     }
 /*
     int priority = 0, totalPassager = 0;
@@ -364,38 +387,41 @@ void getPeriod(int day, int months, int finalDay, int finalMonth){
     int nb = 0, tab[500];
     for (int i = 0; i < nb_flights; i++) {
 
-        if(months < flights[i]->date[1] < finalMonth){
+        if (months <= flights[i]->date[1] && finalMonth >= flights[i]->date[1] ) {
             tab[nb] = i;
             nb++;
+
             continue;
         }
 
-        if(flights[i]->date[1] == months && flights[i]->date[0] >= day){
+        if (flights[i]->date[1] == months && flights[i]->date[0] >= day) {
             tab[nb] = i;
             nb++;
+
             continue;
         }
 
-        if(flights[i]->date[1] == finalMonth && flights[i]->date[0] <= finalDay){
+        if (flights[i]->date[1] == finalMonth && flights[i]->date[0] <= finalDay) {
             tab[nb] = i;
             nb++;
+
             continue;
-        }
-
-
-    }
-    flight *f = malloc(sizeof(struct s_flight) * nb);
-    for(int i = 0; i < nb_flights; i++){
-        for (int j = 0; j < nb; j++) {
-            if(i != j) continue;
-            f[nb] = *flights[i];
         }
     }
 
-    if(nb == 0){
+    if (nb == 0) {
         printf("Il n'y a aucun vols sur la periode que vous souhaitez ! \n");
         return;
     }
 
+    int amount = 0;
+    flight *f = malloc(sizeof(struct s_flight) * nb);
+    for(int i = 0; i < nb_flights; i++){
+        for (int j = 0; j < nb; j++) {
+            if(i != tab[j]) continue;
+            f[amount] = *flights[i];
+            amount ++;
+        }
+    }
     graphics(f, nb);
 }

@@ -122,7 +122,6 @@ int main()
                 }while(1 > month || month > 12);
 
                 printf("Vous avez choisi la periode %d/%d à %d/%d\n", day, month, finalDay, finalMonth);
-
                 getPeriod(day, month, finalDay, finalMonth);
                 break;
 

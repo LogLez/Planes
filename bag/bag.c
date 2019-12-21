@@ -16,7 +16,7 @@ char itemsForbidden[100][50];
 
 int saveItemsForbidden(){
     FILE *outfile;
-    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "w");
+    outfile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\items.txt" , "w");
     if (outfile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
@@ -33,7 +33,7 @@ int saveItemsForbidden(){
 
 int getItemsForbidden(){
     FILE *infile;
-    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt", "r");
+    infile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\items.txt", "r");
     if (infile == NULL) {
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cree a la fin du programme.\n");
         return 0;
@@ -146,6 +146,7 @@ void loadBags(flight* f){
     for(int i = 0; i < f->nbPassengersLoaded; i++){
 
         if(f->passengersLoaded[i].priority != 1) continue;
+
         for(int j = 0; j <f->passengersLoaded[i].nb_bags;j++){
             printf("Bagage prioritaire de %s %s chargé et embarqué ! \n", f->passengersLoaded[i].name,f->passengersLoaded[i].surname);
             f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[j];
@@ -156,6 +157,7 @@ void loadBags(flight* f){
     for(int i = 0; i < f->nbPassengersLoaded; i++){
 
         if(f->passengersLoaded[i].priority == 1) continue;
+
         for(int j = 0; j <f->passengersLoaded[i].nb_bags;j++){
             printf("Bagage de %s %s chargé et embarqué ! \n", f->passengersLoaded[i].name,f->passengersLoaded[i].surname);
             f->bagsLoaded[f->nbBags] = f->passengersLoaded[i].bag[j];
