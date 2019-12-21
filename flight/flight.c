@@ -312,7 +312,14 @@ int graphics(flight *f , int nbFlights){
 
 
     for(int t = 0; t < days; t++) {
-        int nbVols = 0, kgBags = 0, priority = 0, totalBags = 0, totalPassenger = 0;
+        int nbVols = 0, kgBags = 0, priority = 0, totalBags = 0, totalPassenger = 0, already = 0;
+
+        for (int i = 0; i < t; i++) {
+            if(tab[i][0] == tab[t][0] && tab[i][1] == tab[t][1] ) already = 1;
+        }
+
+        if(already == 1) continue;
+
         for(int j = 0; j < nbFlights; j++) {
 
             if (f[j].date[0] == tab[t][0] && f[j].date[1] == tab[t][1]) {
