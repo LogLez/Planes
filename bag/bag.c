@@ -1,10 +1,22 @@
+/**
+ * \file bag.c
+ * \brief Programme des bagages.
+ * \author Rayane.M & Lorène.B
+ * \version 0.1
+ * \date 26 octobre 2019
+ *
+ * Programme de bagages pour l'objet de gestion des bagages relatifs au passagers d'un vol.
+ *
+ */
+
 #pragma once
 #include "bag.h"
+
 int saveItemsForbidden();
 int getItemsForbidden();
 
 void addBag(passenger* passenger1);
-void ticketBag(flight* vol1, passenger passenger1);
+void ticketBag(flight* f, passenger passenger1);
 void loadBags(flight* vol1);
 void addHandBag(passenger* p);
 void checkHandBag(passenger* p);
@@ -13,12 +25,21 @@ int nbItemsForbidden = 0;
 char itemsForbidden[100][50];
 /*============================================================*/
 
+/**
+ * \fn int saveItemsForbidden()
+ * \brief Fonction de sauvegarde des items interdits dans un fichier.
+ *        Recupère les items du tableau itemsForbidden[100][50] et les
+ *        sauvegarde dans un fichier.
+ *
+ * \return 0 si reussit, -1 si echec.
+ */
+
 int saveItemsForbidden(){
     FILE *outfile;
     outfile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\items.txt" , "w");
     if (outfile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! V%crifiez le nom du repertoire.\n", 130);
-        return 0;
+        return -1;
     }
 
     fprintf(outfile, "%d \n", nbItemsForbidden);
@@ -30,12 +51,21 @@ int saveItemsForbidden(){
     return 0;
 }
 
+/**
+ * \fn int getItemsForbidden()
+ * \brief Fonction de récupération des items interdits depuis un fichier.
+ *        Charge les items dans le tableau itemsForbidden[100][50] depuis un
+ *        fichier.
+ *
+ * \return 0 si reussit, -1 si echec.
+ */
+
 int getItemsForbidden(){
     FILE *infile;
     infile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\items.txt", "r");
     if (infile == NULL) {
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cr%ce a la fin du programme.\n", 130);
-        return 0;
+        return -1;
     }
 
     int i = 0;
@@ -49,10 +79,18 @@ int getItemsForbidden(){
     return 0;
 }
 
-void addBag(passenger* passenger1){
+/**
+ * \fn void addBag(passenger* p){
+ * \brief Fonction de création de un ou des bagages  pour un passager.
+ *        Ajout de 1 bagages ou 2 si le passager est priritaire.
+ *
+ * \param p passenger à appliquer les bagages , ne peut être NULL.
+ * \return void
+ */
+void addBag(passenger* p){
     int choice;
 
-    if(passenger1->priority == 1){
+    if(p->priority == 1){
         printf("Souhaitez-vous enregistrer un bagage prioritaire ? (1 = OUI, 0 = NON)\n");
         scanf("%i", &choice);
         if(choice == 1){
@@ -71,8 +109,8 @@ void addBag(passenger* passenger1){
 
             printf("Vous avez enregistre un bagage prioritaire ! \n");
 
-            passenger1->bag[0] = b;
-            passenger1->nb_bags = passenger1->nb_bags + 1;
+            p->bag[0] = b;
+            p->nb_bags = p->nb_bags + 1;
         }
     }
 
@@ -91,20 +129,29 @@ void addBag(passenger* passenger1){
             scanf("%s", bag1.items[i]);
         }
 
-        if(passenger1->nb_bags == 1){
+        if(p->nb_bags == 1){
             bag1.priority = 1;
-            passenger1->bag[1] = bag1;
+            p->bag[1] = bag1;
         }else{
             bag1.priority = 0;
-            passenger1->bag[0] = bag1;
+            p->bag[0] = bag1;
         }
 
         printf("Vous avez enregistr%c un baggage  ! \n", 130);
-        passenger1->nb_bags = passenger1->nb_bags + 1;
+        p->nb_bags = p->nb_bags + 1;
     }
 }
 
-void ticketBag(flight* vol1, passenger passenger1){
+/**
+ * \fn void ticketBag(flight* f, passenger passenger1);
+ * \brief Fonction de création de un ou des tickets bagages  pour un passager.
+ *        affiche les infos de chaques bagages d'un passager.
+ *
+ * \param p passenger à appliquer les bagages , ne peut être NULL.
+ *        f flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \return void
+ */
+void ticketBag(flight* f, passenger passenger1){
 
     for(int j=0; j<passenger1.nb_bags;j++){
         bag bag1 = passenger1.bag[j];
@@ -121,13 +168,21 @@ void ticketBag(flight* vol1, passenger passenger1){
         }
         printf("\n");
         printf("Poids: %dkg  \n", bag1.kg);
-        printf("D%cpart: %s   -   Arrivee: %s \n", 130, vol1->departure, vol1->arrival);
+        printf("D%cpart: %s   -   Arrivee: %s \n", 130, f->departure, f->arrival);
         if(bag1.priority == 1)  printf("Baggage prioritaire: 1  \n");
         if(bag1.priority == 0 ) printf("Baggage non-prioritaire: 1 \n");
         printf("----------------------------------------\n");
     }
 }
 
+/**
+ * \fn void loadBags(flight* f)
+ * \brief Fonction de chargement des bagages dans un vol.
+ *        Charge tous les bagages de tous les passagers d'un vol.
+ *
+ * \param f flight sur lequel on charge les bagages, ne peut être NULL.
+ * \return void
+ */
 void loadBags(flight* f){
 
     for(int i = 0; i < f->nbPassengersLoaded; i++){
@@ -153,6 +208,14 @@ void loadBags(flight* f){
     }
 }
 
+/**
+ * \fn void addHandBag(passenger* p)
+ * \brief Fonction de création d'un handBag d'un passager (sac à dos, ou sac à main).
+ *        Charge tous les bagages de tous les passagers d'un vol.
+ *
+ * \param p passenger à appliquer le handBag , ne peut être NULL.
+ * \return void
+ */
 void addHandBag(passenger* p) {
 
     printf("Combien d'items comportera votre bagage cabine ? \n");
@@ -164,7 +227,14 @@ void addHandBag(passenger* p) {
     }
 }
 
-
+/**
+ * \fn void checkHandBag(passenger *p)
+ * \brief Fonction de vérification des objets d'un handBag d'un passager (sac à dos, ou sac à main).
+ *        Vérifie tous les items un par un et retire un item si celui-ci est interdit.
+ *
+ * \param p passenger à récupérer le handBag , ne peut être NULL.
+ * \return void
+ */
 void checkHandBag(passenger *p) {
 
     for (int i = 0; i < nbItemsForbidden; i++) {

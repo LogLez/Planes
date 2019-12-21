@@ -1,3 +1,14 @@
+/**
+ * \file flight.c
+ * \brief Programme des vols.
+ * \author Rayane.M & Lorène.B
+ * \version 0.1
+ * \date 26 octobre 2019
+ *
+ * Programme de vols pour l'objet de gestion des vols de l'aéroport.
+ *
+ */
+
 #pragma once
 #include "flight.h"
 

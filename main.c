@@ -1,3 +1,13 @@
+/**
+ * \file main.c
+ * \brief Programme principal.
+ * \author Rayane.M & Lorène.B
+ * \version 0.1
+ * \date 26 octobre 2019
+ *
+ * Programme des strutures pour l'objet de gestion des passagers relatifs aux vols.
+ *
+ */
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>

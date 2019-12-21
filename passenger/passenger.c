@@ -1,3 +1,14 @@
+/**
+ * \file passenger.c
+ * \brief Programme des passagers.
+ * \author Rayane.M & Lorène.B
+ * \version 0.1
+ * \date 26 octobre 2019
+ *
+ * Programme de passagers pour l'objet de gestion des passagers relatifs aux vols.
+ *
+ */
+
 #pragma once
 #include "passenger.h"
 
