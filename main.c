@@ -5,7 +5,7 @@
  * \version 0.1
  * \date 26 octobre 2019
  *
- * Programme des strutures pour l'objet de gestion des passagers relatifs aux vols.
+ * Programme principal pour l'objet de gestion des différents menus.
  *
  */
 #include <stdlib.h>
@@ -14,6 +14,13 @@
 #include "passenger/passenger.c"
 #include "flight/flight.c"
 #include "bag/bag.c"
+
+/**
+* \fn send_menu()
+* \brief  Fonction d'affichage d'un menu
+ *        propose différents choix à l'utilisateur
+* \return choice
+*/
 
 
 int send_menu()
@@ -34,6 +41,14 @@ int send_menu()
     scanf("%d", &choice);
     return choice;
 }
+
+/**
+* \fn flightMenu()
+* \brief  Fonction d'affichage d'un menu
+ *        propose différents choix concernant un vol à l'utilisateur
+* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+* \return 0
+*/
 
 int flightMenu(flight *f){
 

@@ -25,6 +25,16 @@ int checkBeforeLoading(flight *f);
 int loadPassenger(flight *f );
 
 /*============================================================*/
+
+/**
+* \fn showBillet(flight *f, passenger *p)
+* \brief  Fonction d'affichage du boarding pass
+* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+*         p passenger concerné par le billet, ne peut être NULL.
+* \return void
+*/
+
+
 void showBillet(flight *f, passenger *p){
     printf(" \n \n");
     printf("===============================================\n");
@@ -41,6 +51,15 @@ void showBillet(flight *f, passenger *p){
 
     printf("===============================================\n");
 }
+
+/**
+* \fn addPassenger(flight *f )
+* \brief  Fonction d'ajout d'un passager
+ *        récupère des informations concernant le passager pour l'ajouter sur le vol
+* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+* \return 0
+*/
+
 
 int addPassenger(flight *f ){
     printf("Bienvenue dans la cat%cgorie : Ajouter un passager !\n", 130);
@@ -102,6 +121,17 @@ int addPassenger(flight *f ){
     return 0;
 
 }
+
+/**
+* \fn crossBorder(flight *f, passenger p)
+* \brief  Fonction de passage des frontières
+ *        Autorise le passager à passer les frontiières si, lorsque le vol nécéssite un visa, le passager en possède un
+* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+*         p passenger concerné par le visa, ne peut être NULL.
+* \return -1 si il ne l'a pas, 0 si il l'a ou que le vol ne demande pas de visa
+*/
+
+
 int crossBorder(flight *f, passenger p){
 
     printf("Le passager %s %s veut se rendre en %s !\n", p.surname, p.name, f->arrival);
@@ -120,6 +150,17 @@ int crossBorder(flight *f, passenger p){
     }
     return 0;
 }
+
+/**
+* \fn savePassenger(flight *f)
+* \brief  Fonction d'enregistrement d'un passager sur un vol
+ *        vérifie que le passager n'a pas déjà été enregistré
+ *        attribue une place au passager
+ *        fait passer les frontières au passager
+ *        affiche le boarding pass
+* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+* \return -1 si échec, 0 si réussite
+*/
 
 
 int savePassenger(flight *f){
@@ -180,6 +221,14 @@ int savePassenger(flight *f){
     return -1;
 }
 
+/**
+* \fn checkBeforeLoading(flight *f)
+* \brief  Fonction de vérification pour l'embarquement
+ *        vérifie que tous les passagers prioritaires ont embarqué
+* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+* \return -1 échec, 0 si réussite
+*/
+
 
 int checkBeforeLoading(flight *f){
     int nbPriority = 0;
@@ -196,6 +245,16 @@ int checkBeforeLoading(flight *f){
 
     return 0;
 }
+
+/**
+* \fn loadPassenger(flight *f
+* \brief  Fonction d'embarquement des passagers
+ *        vérifie que le passager est enregistré pour l'embarquer
+ *        fait passer la sécurité pour vérifier les sacs cabines
+* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+* \return -1 si échec, 0 si réussite
+*/
+
 
 int loadPassenger(flight *f ){
     int ticket;

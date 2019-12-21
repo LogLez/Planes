@@ -31,12 +31,12 @@ char itemsForbidden[100][50];
  *        Recupère les items du tableau itemsForbidden[100][50] et les
  *        sauvegarde dans un fichier.
  *
- * \return 0 si reussit, -1 si echec.
+ * \return 0 si reussi, -1 si echec.
  */
 
 int saveItemsForbidden(){
     FILE *outfile;
-    outfile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\items.txt" , "w");
+    outfile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt" , "w");
     if (outfile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! V%crifiez le nom du repertoire.\n", 130);
         return -1;
@@ -57,12 +57,12 @@ int saveItemsForbidden(){
  *        Charge les items dans le tableau itemsForbidden[100][50] depuis un
  *        fichier.
  *
- * \return 0 si reussit, -1 si echec.
+ * \return 0 si reussi, -1 si echec.
  */
 
 int getItemsForbidden(){
     FILE *infile;
-    infile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\items.txt", "r");
+    infile = fopen ("/Users/lorenebergougnoux/Desktop/NF05/TD8/td8/items.txt", "r");
     if (infile == NULL) {
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cr%ce a la fin du programme.\n", 130);
         return -1;
@@ -81,8 +81,8 @@ int getItemsForbidden(){
 
 /**
  * \fn void addBag(passenger* p){
- * \brief Fonction de création de un ou des bagages  pour un passager.
- *        Ajout de 1 bagages ou 2 si le passager est priritaire.
+ * \brief Fonction de création de un ou des bagages pour un passager.
+ *        Ajout de 1 bagage ou 2 si le passager est priritaire.
  *
  * \param p passenger à appliquer les bagages , ne peut être NULL.
  * \return void
@@ -145,7 +145,7 @@ void addBag(passenger* p){
 /**
  * \fn void ticketBag(flight* f, passenger passenger1);
  * \brief Fonction de création de un ou des tickets bagages  pour un passager.
- *        affiche les infos de chaques bagages d'un passager.
+ *        affiche les infos de chaque bagage d'un passager.
  *
  * \param p passenger à appliquer les bagages , ne peut être NULL.
  *        f flight sur lequel le passager est inscrit, ne peut être NULL.

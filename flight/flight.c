@@ -35,6 +35,15 @@ int nb_flights = 0;
 
 /*============================================================*/
 
+/**
+ * \fn int addPassport()
+ * \brief Fonction de création d'un numero de passeport a un passager
+ *        vérifie si le numero entré est supérieur à 1000
+ *        vérifie si le numéro entré n'a pas déjà été entré par quelqu'un d'autre
+ * \return addPassport() si le numero a deja ete rentré auparavant
+ *         passport si le numero est valable
+ */
+
 int addPassport(){
     int passport;
 
@@ -59,6 +68,14 @@ int addPassport(){
     return passport;
 }
 
+/**
+ * \fn int addTicket()
+ * \brief Fonction d'attribution d'un numero de billet aléatoire à un passager
+ *        si ce numero a deja ete attribue, il genere un autre numero
+ *
+ * \return  ticket
+ */
+
 int addTicket(){
     int result = 0;
     int ticket = 100000000 + (999999990-100000000) * ( (float) rand()) / RAND_MAX;
@@ -78,6 +95,15 @@ int addTicket(){
     return ticket;
 }
 
+/**
+ * \fn int specificPlace(flight *vol1, int place)
+ * \brief Fonction d'attribution d'une place demandée par le passager
+ *        verifie si la place specifique demandee par le passager est comprise entre 0 et 500
+ *        verifie si la place demandee a deja ete attribuee
+ * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \return place si réussi, 0 si échec
+ */
+
 int specificPlace(flight *vol1, int place) {
     while(1>place || place>501) {
         printf("Saisir une nouvelle place. \n");
@@ -93,6 +119,14 @@ int specificPlace(flight *vol1, int place) {
 
     return place;
 }
+/**
+ * \fn int randomPlace(flight *vol1)
+ * \brief Fonction d'attribution d'une place aléatoire à un passager
+ *        attribue une place aléatoire au passager entre 1 et 500
+ *        si la place attribuée a déjà été attribuée, en génère une autre
+ * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \return random si réussi, 0 si échec
+ */
 
 int randomPlace(flight* vol1){
     int random = 1 + (500-1) * ( (float) rand()) / RAND_MAX;
@@ -108,6 +142,15 @@ int randomPlace(flight* vol1){
 
     return random;
 }
+
+/**
+ * \fn hasVisa(flight *f, passenger *p)
+ * \brief  Fonction de vérification de possession du visa
+ *         demande au passager si il possède un visa
+ * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+ *         p passenger concerné par le visa, ne peut être NULL.
+ * \return -1 si il ne l'a pas, 0 si il l'a
+ */
 
 int hasVisa(flight *f, passenger *p){
     int visa = 0;
@@ -126,6 +169,15 @@ int hasVisa(flight *f, passenger *p){
     }
     return 0;
 }
+
+/**
+ * \fn flight* find(int id)
+ * \brief  Fonction d'accès aux informations d'un vol grâce à son ID
+ * \return flight[i] si réussi
+ *          NULL s'il n'a pas été trouvé
+ */
+
+
 flight* find(int id){
 
     for(int i = 0; i<nb_flights;i++){
@@ -134,6 +186,15 @@ flight* find(int id){
     }
     return NULL;
 }
+
+/**
+ * \fn searchID(int id)
+ * \brief  Fonction de recherche d'ID
+ *         vérifie si l'ID entré n'est pas déjà utilisé pour un autre avion
+ * \return 1 si échec, 0 si réussi
+ */
+
+
 int searchID(int id){
     for(int i =0 ; i<nb_flights;i++){
         if(flights[i]->id == id){
@@ -142,6 +203,14 @@ int searchID(int id){
     }
     return 0;
 }
+
+/**
+ * \fn void addFlight(){
+ * \brief Fonction de création d'un avion
+ *        récupération des informations le concernant
+ *        affichage des informations
+ * \return void
+ */
 
 void addFlight(){
     int id;
@@ -184,6 +253,14 @@ void addFlight(){
     printf("\n");
 }
 
+/**
+ * \fn saveFlights()
+ * \brief  Fonction de sauvegarde d'un avion dans un fichier
+ *         récupère les informations concernant un avion et les sauvegarde dans un fichier
+ *
+ * \return 0
+ */
+
 int saveFlights(){
     FILE *outfile;
 
@@ -210,6 +287,13 @@ int saveFlights(){
 
     return 0;
 }
+
+/**
+ * \fn getFlights
+ * \brief  Fonction de récupération des avions dans un fichier
+ *         charge les informations concernant les avions depuis un fichier
+ * \return 0
+ */
 
 int getFlights(){
 
@@ -246,6 +330,13 @@ int getFlights(){
     return 0;
 }
 
+/**
+ * \fn showFlights
+ * \brief  Fonction d'affichage des vols disponibles
+ *         affichage des informations et des passagers des vols disponibles
+ * \return void
+ */
+
 void showFlights(){
     printf("\n\nVoici la liste de tous les vols disponibles : \n\n");
     for(int i = 0; i<nb_flights;i++){
@@ -260,6 +351,15 @@ void showFlights(){
     }
     printf("=========================================\n");
 }
+
+/**
+ * \fn sendFlight(flight *f)
+ * \brief  Fonction d'envoi du vol
+ *         vérifie si tous les passagers enregistrés ont embarqué
+ *         vérifie que les bagages ont été chargés
+ * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \return -1 si échec, 0 si réussite
+ */
 
 int sendFlight(flight *f){
     if(f->nbPassengers != f->nbPassengersLoaded){
@@ -290,6 +390,16 @@ int sendFlight(flight *f){
 }
 
 /////////////////////BONUS///////////////////////
+
+/**
+ * \fn graphics(flight *f , int nbFlights)
+ * \brief  Fonction de calcul de statistiques
+ *         calcule et affiche le taux de remplissage des avions sur une periode
+ *         calcule et affiche le poids moyen des bagages des avions sur une periode
+ *         calcule et affiche le rapport de passagers prioritaires des avions sur une periode
+ * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \return 0
+ */
 
 int graphics(flight *f , int nbFlights){
 
@@ -400,6 +510,12 @@ int graphics(flight *f , int nbFlights){
     }*/
     return 0;
 }
+
+/**
+ * \fn getPeriod(int day, int months, int finalDay, int finalMonth)
+ * \brief  Fonction de récupération d'une période
+ * \return
+ */
 
 void getPeriod(int day, int months, int finalDay, int finalMonth){
 

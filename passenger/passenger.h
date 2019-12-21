@@ -5,7 +5,7 @@
  * \version 0.1
  * \date 26 octobre 2019
  *
- * Programme des strutures pour l'objet de gestion des passagers relatifs aux vols.
+ * Programme des structures pour l'objet de gestion des passagers relatifs aux vols.
  *
  */
 

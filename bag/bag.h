@@ -5,7 +5,7 @@
  * \version 0.1
  * \date 26 octobre 2019
  *
- * Programme principal pour l'objet de gestion des différents menus.
+ * * Programme des structures pour l'objet de gestion des bagages.
  *
  */
 
