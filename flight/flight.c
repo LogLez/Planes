@@ -1,6 +1,6 @@
 /**
  * \file flight.c
- * \brief Programme des vols.
+ * \brief Programme répertoriant les fonctions relatifs aux vols (flights).
  * \author Rayane.M & Lorène.B
  * \version 0.1
  * \date 26 octobre 2019
@@ -40,8 +40,8 @@ int nb_flights = 0;
  * \brief Fonction de création d'un numero de passeport a un passager
  *        vérifie si le numero entré est supérieur à 1000
  *        vérifie si le numéro entré n'a pas déjà été entré par quelqu'un d'autre
- * \return addPassport() si le numero a deja ete rentré auparavant
- *         passport si le numero est valable
+ * \return addPassport() si le numero a déjà été rentrer auparavant
+ *         passport un entier représentant le numéro du passport si celui-ci est valable.
  */
 
 int addPassport(){
@@ -72,8 +72,7 @@ int addPassport(){
  * \fn int addTicket()
  * \brief Fonction d'attribution d'un numero de billet aléatoire à un passager
  *        si ce numero a deja ete attribue, il genere un autre numero
- *
- * \return  ticket
+ * \return  ticket un entier représentant le billet du passager.
  */
 
 int addTicket(){
@@ -100,8 +99,9 @@ int addTicket(){
  * \brief Fonction d'attribution d'une place demandée par le passager
  *        verifie si la place specifique demandee par le passager est comprise entre 0 et 500
  *        verifie si la place demandee a deja ete attribuee
- * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
- * \return place si réussi, 0 si échec
+ * \param  vol1 un pointeur sur le vol dont le passager est inscrit, ne peut être NULL.
+ * \param  place un entier représentant le numéro du siège voulu, ne peut être NULL.
+ * \return place si la place est disponible, 0 si cas contraire.
  */
 
 int specificPlace(flight *vol1, int place) {
@@ -124,8 +124,8 @@ int specificPlace(flight *vol1, int place) {
  * \brief Fonction d'attribution d'une place aléatoire à un passager
  *        attribue une place aléatoire au passager entre 1 et 500
  *        si la place attribuée a déjà été attribuée, en génère une autre
- * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
- * \return random si réussi, 0 si échec
+ * \param  vol1 un pointeur sur le vol dont passager est inscrit, ne peut être NULL.
+ * \return random un entier repésentant le numéo du siège si réussi, 0 si échec.
  */
 
 int randomPlace(flight* vol1){
@@ -148,7 +148,7 @@ int randomPlace(flight* vol1){
  * \brief  Fonction de vérification de possession du visa
  *         demande au passager si il possède un visa
  * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
- *         p passenger concerné par le visa, ne peut être NULL.
+ * \param  p passenger concerné par le visa, ne peut être NULL.
  * \return -1 si il ne l'a pas, 0 si il l'a
  */
 
@@ -173,10 +173,9 @@ int hasVisa(flight *f, passenger *p){
 /**
  * \fn flight* find(int id)
  * \brief  Fonction d'accès aux informations d'un vol grâce à son ID
- * \return flight[i] si réussi
- *          NULL s'il n'a pas été trouvé
+ * \param  id un entier représentant l'id d'un vol, ne peut être NULL.
+ * \return flight[i] un pointeur sur un vol si réussi,  NULL s'il n'a pas été trouvé
  */
-
 
 flight* find(int id){
 
@@ -191,9 +190,9 @@ flight* find(int id){
  * \fn searchID(int id)
  * \brief  Fonction de recherche d'ID
  *         vérifie si l'ID entré n'est pas déjà utilisé pour un autre avion
- * \return 1 si échec, 0 si réussi
+ * \param  id un entier représentant l'id d'un vol, ne peut être NULL.
+ * \return 0 si échec, 1 si réussi.
  */
-
 
 int searchID(int id){
     for(int i =0 ; i<nb_flights;i++){
@@ -257,8 +256,7 @@ void addFlight(){
  * \fn saveFlights()
  * \brief  Fonction de sauvegarde d'un avion dans un fichier
  *         récupère les informations concernant un avion et les sauvegarde dans un fichier
- *
- * \return 0
+ * \return 0 si reussit ou -1 cas contraire.
  */
 
 int saveFlights(){
@@ -268,7 +266,7 @@ int saveFlights(){
     outfile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\flights.dat", "w");
     if (outfile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! V%crifiez le nom du repertoire \n", 130);
-        return 0;
+        return -1;
     }
     fwrite(&nb_flights, sizeof(int), 1, outfile);
 
@@ -292,7 +290,7 @@ int saveFlights(){
  * \fn getFlights
  * \brief  Fonction de récupération des avions dans un fichier
  *         charge les informations concernant les avions depuis un fichier
- * \return 0
+ * \return 0 si reussit ou -1 cas contraire.
  */
 
 int getFlights(){
@@ -303,7 +301,7 @@ int getFlights(){
     infile = fopen ("C:\\Users\\rayane\\Documents\\NF05\\Planes\\flights.dat" , "r");
     if (infile == NULL){
         fprintf(stderr, "\nLe fichier n'existe pas ! Il sera cr%ce %c la fin du programme.\n", 130, 133);
-        return 0;
+        return -1;
     }
 
     fread(&nb_flights, sizeof(int), 1, infile);
@@ -358,7 +356,7 @@ void showFlights(){
  *         vérifie si tous les passagers enregistrés ont embarqué
  *         vérifie que les bagages ont été chargés
  * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
- * \return -1 si échec, 0 si réussite
+ * \return -1 si échec, 0 si réussit
  */
 
 int sendFlight(flight *f){
@@ -397,7 +395,8 @@ int sendFlight(flight *f){
  *         calcule et affiche le taux de remplissage des avions sur une periode
  *         calcule et affiche le poids moyen des bagages des avions sur une periode
  *         calcule et affiche le rapport de passagers prioritaires des avions sur une periode
- * \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \param  f un pointeur sur flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \param  nbFlights un entier indiquant le nombre de vols de la période, ne peut être NULL.
  * \return 0
  */
 
@@ -513,23 +512,28 @@ int graphics(flight *f , int nbFlights){
 
 /**
  * \fn getPeriod(int day, int months, int finalDay, int finalMonth)
- * \brief  Fonction de récupération d'une période
+ * \brief  Fonction de récupération d'une période.
+ *
+ * \param  day un entier indiquant le jour de départ, ne peut être NULL.
+ * \param  months un entier indiquant le mois de départ, ne peut être NULL.
+ * \param  finalDay un entier indiquant le jour d'arrivée, ne peut être NULL.
+ * \param  finalMonth un entier indiquant le mois d'arrivée, ne peut être NULL.
  * \return
  */
 
-void getPeriod(int day, int months, int finalDay, int finalMonth){
+void getPeriod(int day, int month, int finalDay, int finalMonth){
 
     int nb = 0, tab[500];
     for (int i = 0; i < nb_flights; i++) {
 
-        if (months <= flights[i]->date[1] && finalMonth >= flights[i]->date[1] ) {
+        if (month <= flights[i]->date[1] && finalMonth >= flights[i]->date[1] ) {
             tab[nb] = i;
             nb++;
 
             continue;
         }
 
-        if (flights[i]->date[1] == months && flights[i]->date[0] >= day) {
+        if (flights[i]->date[1] == month && flights[i]->date[0] >= day) {
             tab[nb] = i;
             nb++;
 

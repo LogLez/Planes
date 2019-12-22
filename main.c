@@ -1,6 +1,6 @@
 /**
  * \file main.c
- * \brief Programme principal.
+ * \brief Programme principal répertoriant les fonctions relatifs aux menus de départ.
  * \author Rayane.M & Lorène.B
  * \version 0.1
  * \date 26 octobre 2019
@@ -8,6 +8,7 @@
  * Programme principal pour l'objet de gestion des différents menus.
  *
  */
+
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -16,12 +17,11 @@
 #include "bag/bag.c"
 
 /**
-* \fn send_menu()
-* \brief  Fonction d'affichage d'un menu
- *        propose différents choix à l'utilisateur
-* \return choice
-*/
-
+ * \fn send_menu()
+ * \brief  Fonction d'affichage d'un menu
+ *         propose différents choix à l'utilisateur
+ * \return choice un entier représentant kle choix de l'utilisateur.
+ */
 
 int send_menu()
 {
@@ -43,12 +43,12 @@ int send_menu()
 }
 
 /**
-* \fn flightMenu()
-* \brief  Fonction d'affichage d'un menu
+ * \fn flightMenu()
+ * \brief  Fonction d'affichage d'un menu
  *        propose différents choix concernant un vol à l'utilisateur
-* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
-* \return 0
-*/
+ * \param  f un pointeur sur le vol choisi par l'utilisateur dont on souhaite modifier les informaations, ne peut être NULL.
+ * \return 0
+ */
 
 int flightMenu(flight *f){
 
@@ -93,7 +93,12 @@ int flightMenu(flight *f){
     return 0;
 }
 
-
+/**
+ * \fn int main()
+ * \brief  Fonction principale du programme
+ *        propose les différents choix principaux concernant la gsestions de l'aérioport.
+ * \return 0
+ */
 int main()
 {
     long int u;
@@ -160,4 +165,5 @@ int main()
     saveItemsForbidden();
     saveFlights();
     printf("Bonne continuation !\n");
+    return 0;
 }

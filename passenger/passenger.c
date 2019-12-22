@@ -1,12 +1,13 @@
 /**
  * \file passenger.c
- * \brief Programme des passagers.
+ * \brief Programme répertoriant les fonctions relatifs aux passengers.
  * \author Rayane.M & Lorène.B
  * \version 0.1
  * \date 26 octobre 2019
  *
  * Programme de passagers pour l'objet de gestion des passagers relatifs aux vols.
- *
+ * Permet d'ajouter un passager sur un vol, l'enregistrer, l'embarquer s'il le peut, vérifier ses bagages
+ * et montrer ses informations.
  */
 
 #pragma once
@@ -29,11 +30,10 @@ int loadPassenger(flight *f );
 /**
 * \fn showBillet(flight *f, passenger *p)
 * \brief  Fonction d'affichage du boarding pass
-* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
-*         p passenger concerné par le billet, ne peut être NULL.
+* \param  f un pointeur sur le vol dont le passager est inscrit, ne peut être NULL.
+* \param  p un pointeur sur le passager concerné par le billet, ne peut être NULL.
 * \return void
 */
-
 
 void showBillet(flight *f, passenger *p){
     printf(" \n \n");
@@ -54,9 +54,9 @@ void showBillet(flight *f, passenger *p){
 
 /**
 * \fn addPassenger(flight *f )
-* \brief  Fonction d'ajout d'un passager
- *        récupère des informations concernant le passager pour l'ajouter sur le vol
-* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
+* \brief  Fonction d'ajout d'un passager.
+*        Récupère des informations concernant le passager pour l'ajouter sur le vol
+* \param  f un pointeur sur le vol dont le passager veut s'inscrire, ne peut être NULL.
 * \return 0
 */
 
@@ -126,9 +126,9 @@ int addPassenger(flight *f ){
 * \fn crossBorder(flight *f, passenger p)
 * \brief  Fonction de passage des frontières
  *        Autorise le passager à passer les frontiières si, lorsque le vol nécéssite un visa, le passager en possède un
-* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
-*         p passenger concerné par le visa, ne peut être NULL.
-* \return -1 si il ne l'a pas, 0 si il l'a ou que le vol ne demande pas de visa
+* \param  f un pointeur sur le vol dont le passager est inscrit, ne peut être NULL.
+* \param  p le passenger concerné par le visa, ne peut être NULL.
+* \return -1 si il possède pas de visa, 0 si il l'a ou que le vol ne demande pas de visa.
 */
 
 
@@ -154,12 +154,12 @@ int crossBorder(flight *f, passenger p){
 /**
 * \fn savePassenger(flight *f)
 * \brief  Fonction d'enregistrement d'un passager sur un vol
- *        vérifie que le passager n'a pas déjà été enregistré
- *        attribue une place au passager
- *        fait passer les frontières au passager
- *        affiche le boarding pass
-* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
-* \return -1 si échec, 0 si réussite
+*        vérifie que le passager n'a pas déjà été enregistré
+*        attribue une place au passager
+*        fait passer les frontières au passager
+*        affiche le boarding pass
+* \param  f un pointeur sur le vol dont le passager est inscrit, ne peut être NULL.
+* \return -1 si échec, 0 si réussi.
 */
 
 
@@ -224,9 +224,9 @@ int savePassenger(flight *f){
 /**
 * \fn checkBeforeLoading(flight *f)
 * \brief  Fonction de vérification pour l'embarquement
- *        vérifie que tous les passagers prioritaires ont embarqué
-* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
-* \return -1 échec, 0 si réussite
+*         vérifie que tous les passagers prioritaires ont embarqué
+* \param  f un pointeur sur le vol dont le passager est inscrit, ne peut être NULL.
+* \return -1 échec, 0 si réussi.
 */
 
 
@@ -249,10 +249,10 @@ int checkBeforeLoading(flight *f){
 /**
 * \fn loadPassenger(flight *f)
 * \brief  Fonction d'embarquement des passagers
- *        vérifie que le passager est enregistré pour l'embarquer
- *        fait passer la sécurité pour vérifier les sacs cabines
-* \param  f flight sur lequel le passager est inscrit, ne peut être NULL.
-* \return -1 si échec, 0 si réussite
+*        vérifie que le passager est enregistré pour l'embarquer
+*        fait passer la sécurité pour vérifier les sacs cabines
+* \param  f un pointeur sur le vol dont le passager est inscrit, ne peut être NULL.
+* \return -1 si le passager n'a pas été touvé, 0 si cas contraire.
 */
 
 

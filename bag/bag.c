@@ -1,6 +1,6 @@
 /**
  * \file bag.c
- * \brief Programme des bagages.
+ * \brief Programme répertoriant les fonctions relatifs aux bagages.
  * \author Rayane.M & Lorène.B
  * \version 0.1
  * \date 26 octobre 2019
@@ -30,7 +30,6 @@ char itemsForbidden[100][50];
  * \brief Fonction de sauvegarde des items interdits dans un fichier.
  *        Recupère les items du tableau itemsForbidden[100][50] et les
  *        sauvegarde dans un fichier.
- *
  * \return 0 si reussi, -1 si echec.
  */
 
@@ -56,7 +55,6 @@ int saveItemsForbidden(){
  * \brief Fonction de récupération des items interdits depuis un fichier.
  *        Charge les items dans le tableau itemsForbidden[100][50] depuis un
  *        fichier.
- *
  * \return 0 si reussi, -1 si echec.
  */
 
@@ -84,7 +82,7 @@ int getItemsForbidden(){
  * \brief Fonction de création de un ou des bagages pour un passager.
  *        Ajout de 1 bagage ou 2 si le passager est priritaire.
  *
- * \param p passenger à appliquer les bagages , ne peut être NULL.
+ * \param p un pointeur sur le passenger dont on souhaite ajouter les bagages , ne peut être NULL.
  * \return void
  */
 void addBag(passenger* p){
@@ -147,16 +145,16 @@ void addBag(passenger* p){
  * \brief Fonction de création de un ou des tickets bagages  pour un passager.
  *        affiche les infos de chaque bagage d'un passager.
  *
- * \param p passenger à appliquer les bagages , ne peut être NULL.
- *        f flight sur lequel le passager est inscrit, ne peut être NULL.
+ * \param f un pointeur sur le vol du passager , ne peut être NULL.
+ * \param p un passager dont on souhaite afficher les informations des bagaes, ne peut être NULL.
  * \return void
  */
-void ticketBag(flight* f, passenger passenger1){
+void ticketBag(flight* f, passenger p){
 
-    for(int j=0; j<passenger1.nb_bags;j++){
-        bag bag1 = passenger1.bag[j];
+    for(int j=0; j<p.nb_bags;j++){
+        bag bag1 = p.bag[j];
         printf("-------------Ticket_Baggage-------------\n");
-        printf("Nom: %s   -   Pr%cnom: %s \n", passenger1.surname, 130, passenger1.name);
+        printf("Nom: %s   -   Pr%cnom: %s \n", p.surname, 130, p.name);
         if(bag1.nbItems != 0) {
             printf("Items: ");
             for (int k = 0; k < bag1.nbItems; k++) {
@@ -180,7 +178,7 @@ void ticketBag(flight* f, passenger passenger1){
  * \brief Fonction de chargement des bagages dans un vol.
  *        Charge tous les bagages de tous les passagers d'un vol.
  *
- * \param f flight sur lequel on charge les bagages, ne peut être NULL.
+ * \param  f un pointeur sur le vol dont on souhaite charger les bagages, ne peut être NULL.
  * \return void
  */
 void loadBags(flight* f){
@@ -212,8 +210,7 @@ void loadBags(flight* f){
  * \fn void addHandBag(passenger* p)
  * \brief Fonction de création d'un handBag d'un passager (sac à dos, ou sac à main).
  *        Charge tous les bagages de tous les passagers d'un vol.
- *
- * \param p passenger à appliquer le handBag , ne peut être NULL.
+ * \param  p un pointeur sur le passager dont le handBag doit être ajouté, ne peut être NULL.
  * \return void
  */
 void addHandBag(passenger* p) {
@@ -232,7 +229,7 @@ void addHandBag(passenger* p) {
  * \brief Fonction de vérification des objets d'un handBag d'un passager (sac à dos, ou sac à main).
  *        Vérifie tous les items un par un et retire un item si celui-ci est interdit.
  *
- * \param p passenger à récupérer le handBag , ne peut être NULL.
+ * \param  p un pointeur sur le passager dont le handBag doit être vérifier, ne peut être NULL.
  * \return void
  */
 void checkHandBag(passenger *p) {
