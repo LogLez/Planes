@@ -247,7 +247,7 @@ int checkBeforeLoading(flight *f){
 }
 
 /**
-* \fn loadPassenger(flight *f
+* \fn loadPassenger(flight *f)
 * \brief  Fonction d'embarquement des passagers
  *        vérifie que le passager est enregistré pour l'embarquer
  *        fait passer la sécurité pour vérifier les sacs cabines
